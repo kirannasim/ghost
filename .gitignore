@@ -52,3 +52,5 @@ phpcs.xml
 dist/
 dist-product/
 **/img
+
+db.php
