@@ -104,7 +104,7 @@
 		$password = clean_inp( $password );	
 
 		$password_hash = md5( $password );
-		$sql = "SELECT * FROM users WHERE user_email = '$email' AND user_password = '$password_hash'";   
+		$sql = "SELECT * FROM tbl_users WHERE user_email = '$email' AND user_password = '$password_hash'";   
 		$result = mysqli_query( $conn, $sql );
 
 		if ( $result ) {
@@ -147,7 +147,7 @@
 		// $email = clean_inp( $email );
 		// $password = clean_inp( $password );	
 
-		$sql = "SELECT * FROM users WHERE user_email = '$email'";
+		$sql = "SELECT * FROM tbl_users WHERE user_email = '$email'";
 		$result = mysqli_query( $conn, $sql );
 		$user = mysqli_fetch_array( $result );
 
@@ -156,7 +156,7 @@
 		} else {
 			$password_hash = md5( $password );
 			$api_key = generate_api_key();
-			$sql = "INSERT INTO users (user_email, user_password, user_api_key) VALUES ('$email', '$password_hash', '$api_key')";
+			$sql = "INSERT INTO tbl_users (user_email, user_password, user_api_key) VALUES ('$email', '$password_hash', '$api_key')";
 			
 			if ( mysqli_query( $conn, $sql ) === true ) {
 				
@@ -189,14 +189,14 @@
 	function forgot_password( $conn, $email ) {
 		$email = clean_inp( $email );
 
-		$sql = "SELECT * FROM users WHERE user_email = '$email'";
+		$sql = "SELECT * FROM tbl_users WHERE user_email = '$email'";
 		$result = mysqli_query( $conn, $sql );
 		$user = mysqli_fetch_array( $result );
 
 		if ( $user ) {
 			$token = bin2hex( random_bytes( 50 ) );
 			$email = $user['user_email'];
-			$sql = "INSERT INTO password_resets(email, token) VALUES ('$email', '$token')";
+			$sql = "INSERT INTO tbl_password_resets(email, token) VALUES ('$email', '$token')";
 			mysqli_query( $conn, $sql );
 
 			sendmail_reset_pwd( $email );
@@ -220,7 +220,7 @@
 		}
 		
 		$token = $_GET['token'];
-		$sql = "SELECT email FROM password_resets WHERE token='$token' AND TIME_TO_SEC(TIMEDIFF(created_at, NOW())) < 3600";
+		$sql = "SELECT email FROM tbl_password_resets WHERE token='$token' AND TIME_TO_SEC(TIMEDIFF(created_at, NOW())) < 3600";
 		$result = mysqli_query( $conn, $sql );
 		$record = mysqli_fetch_array( $result );
 		
@@ -233,10 +233,10 @@
 		$password = clean_inp( $password );
 
 		$password_hash = md5( $password );
-		$sql = "UPDATE users SET user_password = '$password_hash' WHERE user_email = '$email'";
+		$sql = "UPDATE tbl_users SET user_password = '$password_hash' WHERE user_email = '$email'";
 		
 		if ( mysqli_query( $conn, $sql ) ) {
-			$sql = "DELETE FROM password_resets WHERE email = '$email'";
+			$sql = "DELETE FROM tbl_password_resets WHERE email = '$email'";
 			mysqli_query( $conn, $sql );
 		
 			header( "Location: /login" );
