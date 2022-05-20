@@ -101,6 +101,7 @@
 
 		static function render() {
 			if(!file_exists(self::route(self::$slug))) {
+				header("HTTP/1.0 404 Not Found");
 				self::$slug = 404;
 			}
 			self::if_redirect();
