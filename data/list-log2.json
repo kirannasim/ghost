@@ -1,0 +1,100 @@
+[
+	{
+	  "service": "Kyaguru",
+	  "requests": 23,
+	  "speed": 0.9,
+	  "success": 24,
+	  "status": true
+	},
+	{
+	  "service": "Uberlux",
+	  "requests": 25,
+	  "speed": 3.67,
+	  "success": 46,
+	  "status": true
+	},
+	{
+	  "service": "Zaggle",
+	  "requests": 31,
+	  "speed": 0.39,
+	  "success": 50,
+	  "status": true
+	},
+	{
+	  "service": "Gink",
+	  "requests": 39,
+	  "speed": 1.33,
+	  "success": 29,
+	  "status": true
+	},
+	{
+	  "service": "Techmania",
+	  "requests": 32,
+	  "speed": 1.63,
+	  "success": 96,
+	  "status": false
+	},
+	{
+	  "service": "Bitrex",
+	  "requests": 35,
+	  "speed": 2.66,
+	  "success": 65,
+	  "status": false
+	},
+	{
+	  "service": "Anivet",
+	  "requests": 33,
+	  "speed": 3.44,
+	  "success": 64,
+	  "status": false
+	},
+	{
+	  "service": "Lumbrex",
+	  "requests": 24,
+	  "speed": 3.36,
+	  "success": 52,
+	  "status": true
+	},
+	{
+	  "service": "Retrotex",
+	  "requests": 31,
+	  "speed": 1.43,
+	  "success": 31,
+	  "status": true
+	},
+	{
+	  "service": "Puria",
+	  "requests": 38,
+	  "speed": 1.07,
+	  "success": 63,
+	  "status": false
+	},
+	{
+	  "service": "Utara",
+	  "requests": 40,
+	  "speed": 0.41,
+	  "success": 73,
+	  "status": false
+	},
+	{
+	  "service": "Dyno",
+	  "requests": 26,
+	  "speed": 0.28,
+	  "success": 93,
+	  "status": false
+	},
+	{
+	  "service": "Handshake",
+	  "requests": 34,
+	  "speed": 2.95,
+	  "success": 77,
+	  "status": true
+	},
+	{
+	  "service": "Orbean",
+	  "requests": 24,
+	  "speed": 2.77,
+	  "success": 40,
+	  "status": true
+	}
+  ]

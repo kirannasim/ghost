@@ -10,12 +10,10 @@
 	include_once 'db.php';	
 
 	class gForm {
-		static $msg;
-		static $status;
-		
+		static $response;
+
 		static function init($data) {
-			self::$msg = $data['msg'];
-			self::$status = $data['status'];						
+			self::$response = $data;
 		}
 	}
 
@@ -31,13 +29,13 @@
 		exit;
 	}
 
-	function clean_inp( $input ) {
-		return htmlspecialchars( stripslashes( trim( $input ) ) );
+	function clean_inp($input) {
+		return htmlspecialchars(stripslashes(trim($input)));
 	}
-
-	function validate_email( $email ) {
-		if ( ! preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/", $email ) ) {
-			return gForm::init(['status' => 'error', 'msg' => 'Invalid email']);
+	
+	function validate_email($email) {
+		if(!preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/", $email)){
+			return gForm::init(['status' => 'error', 'msg' => 'Invalid email, please try again', 'has-error' => 'email']);
 		}
 	}
 
@@ -302,35 +300,5 @@
 		}
 
 	}
-
-	// if (!empty($_POST['action'])) {
-	// 	if($_POST['action'] == 'registration') {
-	// 		if(empty($_POST['email']) || empty($_POST['password']) || empty($_POST['password2'])) return;
-	// 		if($_POST['password'] != $_POST['password2']) return gForm::init(['status' => 'error', 'msg' => 'Password do not match!']);
-	// 		validate_email(clean_inp($_POST['email']));
-	// 		// check if usr do not exists
-	// 		// test_start_session();
-	// 	}
-	// 	if($_POST['action'] == 'login') {
-	// 		if(empty($_POST['email']) || empty($_POST['password'])) return gForm::init(['status' => 'error', 'msg' => 'Empty Fields!']);
-	// 		// if email exists and password_verify();
-	// 		$email = clean_inp($_POST['email']);
-	// 		if($email == 'test@gmail.com') {
-	// 			// test_start_session();
-	// 		}
-	// 		//for test
-			
-	// 	}
-	// 	if($_POST['action'] == 'email-verification') {
-
-	// 	}
-	// 	if($_POST['action'] == 'reset-password') {
-			
-	// 	}
-	// 	if($_POST['action'] == 'new-password') {
-
-	// 	}
-		
-	// }
 	
 ?>

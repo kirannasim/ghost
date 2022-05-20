@@ -4,6 +4,9 @@
 			"admin"  => [
 				"navbar" => false
 			],
+			"home"  => [
+				"footer" => true
+			],
 		],
 		//folder name / php file name => list of slug which should use this php file like a template
 		"templates" => [

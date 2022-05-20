@@ -22,7 +22,10 @@
 			// 	'api_key' => 'KNZXC9890ASD890-ZX-9CAS',
 			// ];
 			$pathinfo = pathinfo($_SERVER['REQUEST_URI']);
-			if(!empty($pathinfo['extension'])) die('hm');
+			if(!empty($pathinfo['extension'])) {
+				header("HTTP/1.0 404 Not Found");
+				die('hm');
+			}
 
 			self::$path = explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 			self::$dir = isset(self::$path[2]) ? self::$path[1] : '';
@@ -36,8 +39,8 @@
 			if(!empty($alis[self::$slug])) {
 				self::$canonical = self::$slug = $alis[self::$slug];
 			}
-
-			self::$settings = $settings['pages'][self::$slug] ?? '';
+			self::$settings = ['footer' => false, 'navbar' => true];
+			self::$settings = array_merge(self::$settings, ($settings['pages'][self::$slug] ?? []));
 			
 			self::$templates = self::map_val_to_key($settings['templates']);
 
@@ -79,7 +82,7 @@
 				self::$template = $slug = $tmp_path[1];
 			}
 			$dir = $slug != '404' && self::$dir ? self::$dir.'/' : '';			
-			self::$body_class = [self::$dir.'-template', 'page-'.$slug];
+			self::$body_class = ['page-'.$slug];
 			if(self::$user) self::$body_class[] = 'login-in';
 			return 'pages/'.$dir.$slug.'.php';
 		}

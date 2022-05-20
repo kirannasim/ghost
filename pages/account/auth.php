@@ -1,16 +1,14 @@
 <?php 
-	if(!empty(gForm::$msg)) {
-		echo '<div class="notice status-'.gForm::$status.'">'.gForm::$msg.'</div>';
-	}
+	require_once('snippets/notice.php');
 ?>
 
-<main class="content fullh">
+<main class="content fullh <?= isset(gForm::$response['has-error']) ? 'invalid has-error-'.implode(' has-error-', gForm::$response['has-error']) : '' ?>">
 	<div class="grow">
 		<div class="left">
 			<h2>Your all in one automated tasks solution</h2>
 			<p>GhostCaptcha Strives to provide everything You need for automation in one place.</p>
 			<video width="500" height="500" autoplay="autoplay" muted loop="loop" poster="/assets/video/dragon-poster.webp" >
-				<source src="/assets/video/dragon.mp4" type="video/mp4">
+				<source src="/assets/video/dragon4.mp4" type="video/mp4">
 				Your browser doesn't support HTML5 video tag.
 			</video>
 		</div>

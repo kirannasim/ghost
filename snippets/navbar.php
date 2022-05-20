@@ -56,7 +56,7 @@
 						</svg>
 					</a>
 				<?php } else {?>
-				<a href="/registration">Login/Signup</a>
+				<a href="/login">Login/Signup</a>
 			<?php }?>			
 		</div>
 	</div>
