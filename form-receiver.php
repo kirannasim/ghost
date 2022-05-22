@@ -150,7 +150,7 @@
 		$user = mysqli_fetch_array( $result );
 
 		if ( $user ) {
-			return gForm::init( ['status' => 'error', 'msg' => 'Email address address already exists.'] );
+			return gForm::init( ['status' => 'error', 'msg' => 'Email address already exists.'] );
 		} else {
 			$password_hash = md5( $password );
 			$api_key = generate_api_key();

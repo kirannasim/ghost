@@ -61,6 +61,6 @@
 		<script defer src="/assets/main.js"></script>
 	
 </head>
-<body class="<?= implode(' ', G::$body_class) ?>">
+<body class="<?= implode(' ', G::$body_class) ?> tmp-<?= self::$template ?>">
 
 	<?php if(G::$settings['navbar']) require_once('snippets/navbar.php');?>

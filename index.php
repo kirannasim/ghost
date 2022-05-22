@@ -1,6 +1,7 @@
 <?php 
 	class G {
 		static $settings;
+		static $icons;
 		static $templates;
 		static $template;
 		static $dir;
@@ -32,6 +33,9 @@
 
 			self::$slug = self::$path[count(self::$path) - 1] ?: 'home';
  
+			require_once('snippets/icons.php');
+			self::$icons = $icons;
+
 			require_once('settings.php');
 			if(empty($settings['templates'])) die('settings file is corapted');
 
@@ -46,6 +50,10 @@
 
 			self::$website = $settings['website'];
 			return new self();
+		}
+
+		static function icon($n, $w = '25', $h = '25') {
+			return '<svg width="'.$w.'" height="'.$h.'" class="icon-'.$n.'" '.self::$icons[$n] ?? '';
 		}
 
 		static function map_val_to_key($arr) {
@@ -81,6 +89,8 @@
 				self::$dir = $tmp_path[1] ? $tmp_path[0] : '';
 				self::$template = $slug = $tmp_path[1];
 			}
+			self::$template = self::$template ?? 'home';
+
 			$dir = $slug != '404' && self::$dir ? self::$dir.'/' : '';			
 			self::$body_class = ['page-'.$slug];
 			if(self::$user) self::$body_class[] = 'login-in';

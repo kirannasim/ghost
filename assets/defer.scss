@@ -1,4 +1,5 @@
 .page-home {
+	.section-7,
 	.section-3 {
 		margin-top: 150px;
 		justify-content: space-between;
@@ -23,10 +24,28 @@
 			div {
 				flex: 0 0 30%;
 			}
+			svg {
+				vertical-align: middle;
+				margin-right: 7px;
+			}
 			margin-bottom: 3px;
 		}
 		.right {
 			flex: 0 0 50%;
+		}
+		.btn {
+			margin-top: 74px;
+		}
+	}
+	.section-3 {
+		h3 {
+			font-weight: 800;
+			font-size: 50px;
+			line-height: 60px;
+			text-transform: capitalize;
+			color: #EAEAEA;
+		}
+		.right {
 			img {
 				margin-top: 30px;
 				width: 681px;
@@ -34,10 +53,54 @@
 				overflow: hidden;
 			}
 		}
-		.btn {
-			margin-top: 74px;
+	}
+	.section-7 {
+		.grow {
+			margin-top: 90px;
+		}
+		p {
+			width: 90%;
+		}
+		.right {
+			img {
+				
+			}
+		}
+		h3 {
+			margin-top: 0;
+		}
+		.lists {
+			display: flex;
+			ul {
+				flex: 0 0 58%;
+    			margin: 0;
+				padding: 0;
+				margin-top: 8px;
+				li {
+					display: flex;
+					margin-bottom: 10px;
+					text-transform: capitalize;
+					margin-bottom: 11px;
+					line-height: 26px;
+				}
+				svg {
+					flex: 0 0 30px;
+					margin-right: 6px;
+					position: relative;
+					top: 3px;
+				}
+			}
+			.small-list {
+				flex: 0 0 36%;
+				padding-right: 2%;
+			}
+		}
+		.right {
+			text-align: right;
+			padding-right: 36px;
 		}
 	}
+		
 	.sec-title {
 		text-align: center;
 		font-weight: 800;
@@ -45,7 +108,7 @@
 		line-height: 60px;
 		text-transform: capitalize;
 		color: #EAEAEA;
-		margin-bottom: 42px;
+		margin-bottom: 42px; 
 	} 
 
 	.section-4 {
@@ -115,7 +178,6 @@
 					margin-top: 0;
 				}
 				.price {
-					font-family: 'Open Sans';
 					font-style: normal;
 					font-weight: 800;
 					font-size: 80px;
@@ -131,6 +193,8 @@
 					color: #fff;
 					text-align: left;	
 					margin-bottom: 0;
+					padding: 0 20%;
+					text-align: center;
 				}
 				&:nth-child(2) {
 					background: linear-gradient(229.36deg, #8C52F4 -0.02%, #DC81FF 99.97%);
@@ -146,11 +210,38 @@
 						margin-bottom: 30px;
 					}
 				}
+				.icon-rubin {
+					position: relative;
+					left: 20px;
+					top: 20px;
+				}
 			}
 		}
 	}
 	.section-6 {
 		margin-top: 150px;
+		width: calc(100% + 200px);
+		max-width: 100vw;
+		position: relative;
+		&:after {
+			content:'';
+			position: absolute;
+			right: -20px;
+			top: 0;
+			height: 100%;
+			width: 200px;
+			background: linear-gradient(to right, transparent, #030917);
+		}
+		&:before {
+			content:'';
+			position: absolute;
+			left: -200px;
+			z-index: 99;
+			top: 0;
+			height: 100%;
+			width: 180px;
+			background: linear-gradient(to left, transparent, #030917);
+		}
 		h3 {
 			margin-bottom: 10px;
 		}
@@ -158,13 +249,31 @@
 			text-align: center;
 		}
 		.cards {
+			-moz-user-select: none;
+			-khtml-user-select: none;
+			-webkit-user-select: none;
+			margin-left: -180px;
+			padding-left: 180px;
+			padding-right: 180px;
 			margin-top: 55px;
+			white-space: nowrap;
+			justify-content: left;
+			overflow: hidden;
+			cursor: pointer;
+			&::-webkit-scrollbar {
+				display: none;
+			}
+			&.active {
+				cursor: grabbing;
+				transition: all 0.2s ease-in-out;
+				transform: scale(1.01);
+			}
 			.prod-card {
-				&:last-child {
-					display: none;
-				}
+				
+				white-space: initial;
 				border-radius: 20px;
 				flex: 0 0 377px;
+				// max-width: 377px;
 				height: 600px;
 				padding-bottom: 64px;
 				margin-right: 20px;
@@ -190,7 +299,6 @@
 				}
 				.price {
 					margin-top: 38px;
-					font-family: 'Open Sans';
 					font-weight: 800;
 					font-size: 80px;
 					line-height: 109px;
@@ -208,7 +316,7 @@
 					color: #9FA4BC;
 					height: 50px;
 					font-family: 'DM Sans';
-					font-weight: 500;
+					font-weight: 400;
 					font-size: 16px;
 					line-height: 180%;
 					text-align: center;
@@ -217,7 +325,7 @@
 				.btn {
 					margin: 67px auto 0;
 					line-height: 50px;
-					width: 303px;
+					width: 100%;
 				}
 			}
 		}
@@ -258,7 +366,9 @@
 			margin-bottom: 0;
 		}
 		.btn {
-			margin-top: 40px;			
+			line-height: 40px;
+			width: 138px;
+			margin-top: 40px;
 		}
 		ul {
 			margin-top: 0;
@@ -275,11 +385,6 @@
 					color: #9FA4BC;
 				}
 			}
-		}
-		.btn {
-			line-height: 40px;
-			width: 138px;
-
 		}
 	}
 

@@ -17,6 +17,14 @@ $fonts_path: '/assets/fonts';
 	font-weight: 500;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Gilroy';
+	src: local('Gilroy'),
+    url($fonts_path+"/Gilroy-Bold.woff2") format('woff2');
+    font-display: swap;;
+	font-weight: 800;
+    font-style: normal;
+}
 
 @font-face {
     font-family: 'MonumentExtended';
@@ -27,7 +35,7 @@ $fonts_path: '/assets/fonts';
     font-style: normal;
 }
 @font-face {
-    font-family: 'MonumentExtendedBold';
+    font-family: 'MonumentExtended';
 	src: local('MonumentExtended'),
     url($fonts_path+"/MonumentExtended-Ultrabold.woff2") format('woff2');
     font-display: swap;;
@@ -79,6 +87,13 @@ $fonts_path: '/assets/fonts';
 	src: url($fonts_path+"/OpenSans-ExtraBold.woff2") format('woff2');
     font-display: swap;;
 	font-weight: 800;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Open Sans';
+	src: url($fonts_path+"/OpenSans-Bold.woff2") format('woff2');
+    font-display: swap;;
+	font-weight: 600;
     font-style: normal;
 }
 img {
@@ -396,6 +411,10 @@ nav {
 		padding: 0 73px 0 31px;
 		display: grid;
 		line-height: 80px;
+
+		svg {
+			vertical-align: middle;
+		}
 	}
 	&.odd {
 		.g-item:nth-child(2n) {
@@ -545,7 +564,7 @@ nav {
 				align-items: center;
 			}
 			& > div {
-				text-align: right;
+				text-align: right; 
 			}
 		}
 	}
@@ -639,7 +658,7 @@ nav {
 		color: #fff;
 		background: #3E4653;
 		border-radius: 40px;			
-		font-weight: 600;
+		font-weight: 500;
 		font-size: 16px;
 		display: block;
 		letter-spacing: -0.02em;
@@ -1199,7 +1218,6 @@ nav {
 		}
 	}
 }
-
 
 .title-404 {
     font-size: 50px;
