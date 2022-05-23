@@ -1,6 +1,8 @@
 
 <?php 
-	if(!empty(gForm::$response)) {
+	$notice = !empty(gForm::$response) ? gForm::$response : G::$notice;
+
+	if(!empty($notice)) {
 
 	$titles = [
 		'error' => 'Oh snap!',
@@ -22,10 +24,10 @@
 					</svg>',
 	];?>
 
-	<div class="notice status-<?= gForm::$response['status'] ?>">
-		<h6><?= ($titles[gForm::$response['status']] ?? 'Notice') ?></h6>
-		<p><?= gForm::$response['msg'] ?></p>	
-		<?= ($icon[gForm::$response['status']] ?? $icon[gForm::$response['warn']]) ?></h6>
+	<div class="notice status-<?= $notice['status'] ?>">
+		<h6><?= ($titles[$notice['status']] ?? 'Notice') ?></h6>
+		<p><?= $notice['msg'] ?></p>	
+		<?= ($icon[$notice['status']] ?? $icon[$notice['warn']]) ?></h6>
 	</div>
 
 

@@ -19,7 +19,7 @@ class Config {
         'host'          => 'localhost',
         'user'          => 'root',
         'pass'          => '',
-        'db_name'       => 'eugene'
+        'db_name'       => 'ghost'
     );
 
     const COOKIE_EXPIRE_DAYS    = 30;

@@ -42,7 +42,7 @@ $(function() {
 	});
 	$('.page-checkout .buy').click(function(e) {
 		if ($('#form-paypal').hasClass('active')) {			
-			$('#form-paypal').submit();
+			// $('#form-paypal').submit();
 		}			
 	});	
 	$(document).on('click', 'form',function() {

@@ -1,6 +1,7 @@
 <?php 
 	class G {
 		static $settings;
+		static $notice;
 		static $icons;
 		static $templates;
 		static $template;
@@ -16,17 +17,14 @@
 		static function init() {
 			session_start();
 			self::$user = $_SESSION["user"] ?? '';
-			// self::$user = [
-			// 	'credit' => 100,
-			// 	'username' => 'Eugene',
-			// 	'threads_limit' => 100,
-			// 	'api_key' => 'KNZXC9890ASD890-ZX-9CAS',
-			// ];
+
 			$pathinfo = pathinfo($_SERVER['REQUEST_URI']);
 			if(!empty($pathinfo['extension'])) {
 				header("HTTP/1.0 404 Not Found");
 				die('hm');
 			}
+
+			self::$notice = self::get_notice();
 
 			self::$path = explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 			self::$dir = isset(self::$path[2]) ? self::$path[1] : '';
@@ -66,13 +64,37 @@
 			return $r;
 		}
 
+		static function set_notice($d) {
+			setcookie("gnotice", json_encode($d), strtotime( '+1 hours' ), '/');
+		}
+
+		static function get_notice() {
+			$r = [];
+			if(isset($_COOKIE['gnotice'])) {
+				$r = json_decode(stripslashes($_COOKIE['gnotice']), 1);
+				setcookie("gnotice", "");
+			}
+			return $r;
+		}
+
 		static function if_redirect() {
 
 			if(
 				empty(self::$user) && (
 				self::$template == 'dashboard' || 
 				self::$slug == 'new-password')
-			) header('Location: /login');
+			) {
+				self::set_notice(['status' => 'warn', 'msg' => 'You need to be logged in to view this page.']);
+				header('Location: /login');
+			}
+
+			if(
+				empty(self::$user) && (
+				self::$slug == 'checkout')
+			) {
+				self::set_notice(['status' => 'warn', 'msg' => 'You need to be logged in to make a purchase']);
+				header('Location: /login');
+			}
 
 			if(
 				!empty(self::$user) && 

@@ -1,0 +1,205 @@
+.admin-site {
+  display: flex;
+  .admin-details-wrap {
+    $bPadding: 32px 43px 43px 48px;
+    $bPaddingHello: 52px 43px 43px 48px;
+    $bR: 30px;
+    $fF: 'Poppins', sans-serif;
+    flex: 0 0 70%;
+    padding: 2rem 39px;
+    font-family: 'Poppins', sans-serif;
+
+    .admin-hello {
+      background: rgba(255, 255, 255, .08) url('/assets/icons/admin/hand.svg') no-repeat;
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 50px;
+      border-radius: 20px;
+      background-position: 100% -20px;
+
+      .hello-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 22px; 
+        justify-content: center; 
+
+        h5 {
+          font-size: 22px;
+          font-family: $fF;
+          font-weight: 600;
+          margin-bottom: 0;
+          margin-top: 20px;
+        }
+
+        p {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .navigation {
+      margin-top: 1rem;
+      h3 {
+        font-size: 28px;
+        font-family: $fF;
+        font-weight: 800;
+      }
+
+      .chart-select {
+        display: flex;
+        width: 90%;
+        flex-direction: row;
+        justify-content: space-between;
+
+        div {
+          cursor: pointer;
+          font-size: 16px;
+          font-weight: 400;
+          font-family: "Gilroy", sans-serif;
+
+          &:after {
+            content: "";
+            display: block;
+            background: #8C52F4;
+            opacity: 0;
+            height: 3px;
+            border-radius: 3px;
+          }
+
+          &:hover {
+            &:after {
+              opacity: 1;
+            }
+          }
+
+          &.active {
+            font-weight: 500;
+
+            &:after {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+
+    .admin-chart {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(113, 113, 113, 0.1) 100%);
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+      padding: $bPadding;
+      margin-top: 2rem;
+      border-radius: $bR;
+
+      .report {
+        display: flex;
+        justify-content: space-between;
+        font-family: $fF;
+        .time{
+          margin-right: 2rem;
+        }
+        .caption {
+          font-size: 18px;
+        }
+
+        .amount {
+          font-size: 44px;
+          line-height: 66px;
+          font-family: 'Gilroy',sans-serif;
+          letter-spacing: 2px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  .sidebar{
+    border-left: 2px #3E4653 solid;
+    background: #0A101C;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex: 0 0 30%;
+    padding: 2rem 0;
+    .controls{
+      display: flex;
+      width: 80%;
+      align-items: center;
+      justify-content: space-between;
+      .bell{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .admin{
+        display: flex;
+        font-size: 16px;
+        border: 1px #3E4653 solid;
+        border-radius: 30px;
+        padding: 3px 20px 3px 3px;
+        img{
+          margin-right: 12px;
+        }
+      }
+    }
+    .forms{
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      input, select{
+        background: #030917;
+        border: 1px #3E4653 solid;
+        color: #fff;
+        font-size: 14px;
+        padding: 14px 22px;
+        border-radius: 6px;
+      }
+      input{
+        width: 78%;
+      }
+      .ban-btn{width: 20%; cursor: pointer;}
+      label{
+        font-size: 16px;
+      }
+      .ban{
+        margin-top: 1rem;
+      }
+      .select{
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+      }
+      .ban-btn{
+        background: #3E4653;
+        font-size: 14px;
+        border: 1px #3E4653 solid;
+        padding: 14px 22px;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 6px;
+      }
+      .add-btn{
+        background: #BC6EFB;
+        font-size: 14px;
+        border: 1px #BC6EFB solid;
+        padding: 14px 22px;
+        color: #fff;
+        cursor: pointer;
+        margin-top: 2rem;
+        font-weight: 600;
+        border-radius: 40px;
+      }
+
+
+    }
+    .easepick-wrapper{
+      width: 80%;
+      margin-top: 1rem;
+      .container{
+        width: 100%;
+        >main{
+          background: #ccc;
+        }
+      }
+    }
+  }
+}
+

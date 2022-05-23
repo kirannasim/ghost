@@ -10,7 +10,7 @@ class Payment {
 
     public function insertOrder( $user_id, $user_email, $paymentType, $orderReferenceId, $unitAmount, $currency, $orderStatus, $notes, $name ) {
         $order_date = date( "Y-m-d H:i:s" );
-        $query = "INSERT INTO tbl_payment(user_id, user_email, payment_type, order_hash, amount, currency, order_date, order_status, notes, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+        $query = "INSERT INTO tbl_payments(user_id, user_email, payment_type, order_hash, amount, currency, order_date, order_status, notes, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
         $paramValue = array(
             $user_id,
@@ -31,7 +31,7 @@ class Payment {
     }
 
     public function updateOrder( $orderId, $orderStatus ) {
-        $query = "UPDATE tbl_payment SET order_status = ? WHERE order_hash = ?";
+        $query = "UPDATE tbl_payments SET order_status = ? WHERE order_hash = ?";
 
         $paramValue = array(
             $orderStatus,
@@ -43,7 +43,7 @@ class Payment {
     }
 
     public function updateUserCredit( $orderId, $amount ) {
-        $query = "SELECT * FROM tbl_users WHERE user_id = (SELECT user_id FROM tbl_payment WHERE order_hash = ? LIMIT 1)";
+        $query = "SELECT * FROM tbl_users WHERE user_id = (SELECT user_id FROM tbl_payments WHERE order_hash = ? LIMIT 1)";
 
         $paramValue = array(
             $orderId

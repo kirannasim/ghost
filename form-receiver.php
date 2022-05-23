@@ -56,10 +56,12 @@
 	 * 
 	 * $email: Sender email
 	 */
-	function sendmail_reset_pwd( $email ) {
-		$link = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]/reset-password.php?token=$token";
+	function sendmail_reset_pwd( $email, $token ) {
+		$link = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]/reset-password?t=$token";
 		$message = "Hello, click on this <a href=\"$link\">link</a> to reset password.";
 		$message = wordwrap( $message, 70 );
+
+		var_dump($message);
 
 		$mail = new PHPMailer( true );
 
@@ -67,10 +69,10 @@
 			//Server settings
 			$mail->SMTPDebug = SMTP::DEBUG_OFF;                         //Enable verbose debug output
 			$mail->isSMTP();                                            //Send using SMTP
-			$mail->Host       = 'smtp.example.com';                     //Set the SMTP server to send through
+			$mail->Host       = 'ses-smtp-user.20220523-172856';        //Set the SMTP server to send through
 			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-			$mail->Username   = 'user@example.com';                     //SMTP username
-			$mail->Password   = 'secret';                               //SMTP password
+			$mail->Username   = 'AKIA3STHE3DVDNVOPUEK';                     //SMTP username
+			$mail->Password   = 'BPC6mSyq5lBhR+YlP1ccxqgMPBNu07R2RxpodsPwydbq';                               //SMTP password
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
 			$mail->Port       = 465;
 
@@ -81,6 +83,48 @@
 			//Content
 			$mail->isHTML( true );
 			$mail->Subject = 'Password restoration';
+			$mail->Body    = $message;
+
+			$mail->send();
+			
+			return gForm::init( ['status' => 'success', 'msg' => 'Please check your e-mail and click on the link sent to your e-mail.'] );
+		} catch (Exception $e) {
+			return gForm::init( ['status' => 'error', 'msg' => 'Something is wrong. Please try again.'] );
+		}
+	}
+
+	/**
+	 * Send email to verify email
+	 * 
+	 * $email: Sender email
+	 */
+	function sendmail_verify_email( $email, $token ) {
+		$link = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]/email-verification?t=$token";
+		$message = "Successfully signed up. Please verify your email. click on this <a href=\"$link\">link</a> to verify your email.";
+		$message = wordwrap( $message, 70 );
+
+		return $message;
+
+		$mail = new PHPMailer( true );
+
+		try {
+			//Server settings
+			$mail->SMTPDebug = SMTP::DEBUG_OFF;                         //Enable verbose debug output
+			$mail->isSMTP();                                            //Send using SMTP
+			$mail->Host       = 'ses-smtp-user.20220523-172856';        //Set the SMTP server to send through
+			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+			$mail->Username   = 'AKIA3STHE3DVDNVOPUEK';                     //SMTP username
+			$mail->Password   = 'BPC6mSyq5lBhR+YlP1ccxqgMPBNu07R2RxpodsPwydbq';                               //SMTP password
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+			$mail->Port       = 465;
+
+			//Recipients
+			$mail->setFrom( 'from@example.com', 'Mailer' );
+			$mail->addAddress( $email );
+
+			//Content
+			$mail->isHTML( true );
+			$mail->Subject = 'Email verification';
 			$mail->Body    = $message;
 
 			$mail->send();
@@ -154,13 +198,14 @@
 		if ( $user ) {
 			return gForm::init( ['status' => 'error', 'msg' => 'Email address already exists.'] );
 		} else {
+			$token = bin2hex( random_bytes( 50 ) );
 			$password_hash = md5( $password );
 			$api_key = generate_api_key();
-			$sql = "INSERT INTO tbl_users (user_email, user_password, user_api_key) VALUES ('$email', '$password_hash', '$api_key')";
+			$sql = "INSERT INTO tbl_users (user_email, user_password, user_api_key, token) VALUES ('$email', '$password_hash', '$api_key', '$token')";
 			
 			if ( mysqli_query( $conn, $sql ) === true ) {
 				
-				if ( ! empty( $_POST['remember'] ) ) {
+				if ( ! empty( $remember ) ) {
 					setcookie( 'email', $email, time() + ( Config::COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
 					setcookie( 'password', $password, time() + ( Config::COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
 				} else {
@@ -173,8 +218,10 @@
 					}
 				}
 
-				header( "Location: /login" );
-				return gForm::init( ['status' => 'success', 'msg' => 'Successfully signed up.'] );
+				return gForm::init( ['status' => 'error', 'msg' => sendmail_verify_email( $email, $token )] );
+
+				// header( "Location: /login" );
+				// return gForm::init( ['status' => 'success', 'msg' => 'Successfully signed up. Please verify your email'] );
 			} else {
 				return gForm::init( ['status' => 'error', 'msg' => 'Sign up failed. Please try again later.'] );
 			}
@@ -195,16 +242,41 @@
 
 		if ( $user ) {
 			$token = bin2hex( random_bytes( 50 ) );
-			$email = $user['user_email'];
+			$email = $user['user_email'];			
 			$sql = "INSERT INTO tbl_password_resets(email, token) VALUES ('$email', '$token')";
 			mysqli_query( $conn, $sql );
 
-			sendmail_reset_pwd( $email );
+			sendmail_reset_pwd( $email, $token );
 
-			header( "Location: /login" );
+			// header( "Location: /login" );
 			return;
 		} else {
 			return gForm::init( ['status' => 'error', 'msg' => 'E-mail address is not correct.'] );
+		}
+	}
+
+	/**
+	 * Email verification
+	 * 
+	 * $token: token
+	 */
+	function email_verification( $db, $token ) {
+		$query = "SELECT * FROM tbl_users WHERE token = ?";
+		$paramValue = array(
+			$token
+		);
+		$paramType = "s";
+		$result = $db->select( $query, $paramType, $paramValue );
+
+		if ( $result ) {
+			$query = "UPDATE tbl_users SET verified = 1 WHERE token = ?";
+			$paramValue = array(
+				$token
+			);
+			$paramType = "s";
+			$db->execute( $query, $paramType, $paramValue );
+
+			header( "Location: /account" );
 		}
 	}
 
@@ -249,29 +321,29 @@
 	if (G::$template == 'logout') {
 		session_destroy();
 		header('Location: /login');
-	}
-	
-	// tempo solution
-	function test_start_session() {
-		session_start();
-		$_SESSION["user"] = [
-			'credit' => 100,
-			'username' => 'Eugene',
-			'threads_limit' => 100,
-			'api_key' => 'KNZXC9890ASD890-ZX-9CAS',
-		];
-		header('Location: /account');
-	}
+	}	
 
 	$db = new Database();
 	$conn = $db->getConnect();
+	
+	//tempo solution
+	function test_start_session($e) {
+		session_start();
+		$_SESSION["user"] = [
+			'user_credit' => 0,
+			'user_email' => $e,
+			'user_api_key' => 0,
+			'user_threads_limit' => 0,
+		];
+		header('Location: /account');
+	}
 	
 	if ( isset( $_POST['action'] ) ) {
 		$action = $_POST['action'];
 	
 		if ( 'login' === $action ) {			
 			if ( isset( $_POST['email'] ) && isset( $_POST['password'] ) ) {
-				// test_start_session();
+				// test_start_session($_POST['email']);
 				login( $conn, $_POST['email'], $_POST['password'], 1 );
 			}
 		} 
@@ -295,7 +367,9 @@
 		} 
 		
 		if ( 'email-verification' === $action ) {
-
+			if ( isset( $_GET['token'] ) ) {
+				email_verification( $db, $_GET['token'] );
+			}
 		} 
 
 		if ( 'logout' === $action ) {
