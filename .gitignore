@@ -46,11 +46,6 @@
 bower_components
 node_modules
 
-# Other UnderStrap specific files and directories
-phpcs.xml
-dist/
-dist-product/
-**/img
-
-db.php
-config.php
+# Config files
+/db.php
+/config.php
