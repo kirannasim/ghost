@@ -52,8 +52,8 @@
 			return new self();
 		}
 
-		static function icon($n, $w = '25', $h = '25') {
-			return '<svg width="'.$w.'" height="'.$h.'" class="icon-'.$n.'" '.self::$icons[$n] ?? '';
+		static function icon($n, $w = '', $h = '') {			
+			return self::$icons[$n] ? '<svg '.($w ? ' width="'.$w.'"' : '').($h ? ' height="'.$h.'"' : '').' class="icon-'.$n.'" '.self::$icons[$n] : '';
 		}
 
 		static function map_val_to_key($arr) {
@@ -90,9 +90,7 @@
 				self::$template = $slug = $tmp_path[1];
 			}
 			self::$template = self::$template ?? 'home';
-
-			$dir = $slug != '404' && self::$dir ? self::$dir.'/' : '';			
-			self::$body_class = ['page-'.$slug];
+			$dir = $slug != '404' && self::$dir ? self::$dir.'/' : '';
 			if(self::$user) self::$body_class[] = 'login-in';
 			return 'pages/'.$dir.$slug.'.php';
 		}
@@ -114,6 +112,8 @@
 				header("HTTP/1.0 404 Not Found");
 				self::$slug = 404;
 			}
+			self::$body_class = ['page-'.self::$slug, 'tmp-'.self::$template];
+			
 			self::if_redirect();
 			require_once('form-receiver.php');
 			require_once('header.php');

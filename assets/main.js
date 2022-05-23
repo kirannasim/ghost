@@ -51,33 +51,49 @@ $(function() {
 	$(document).on('click', 'form',function(){
 		$('.invalid').removeClass('invalid');
 	});
+
+
+	if($('.slider-row').is('*')) {
+		$('.slider-row').each(function() {
+			var slider = $(this).get(0);
+			let isDown = false;
+			let startX = slider.offsetLeft;
+			let scrollLeft;
+			slider.addEventListener('mousedown', (e) => {
+				isDown = true;
+				slider.classList.add('active');
+				startX = e.pageX - slider.offsetLeft;
+				scrollLeft = slider.scrollLeft;
+			});
+			slider.addEventListener('mouseleave', () => {
+				isDown = false;
+				slider.classList.remove('active');
+			});
+			slider.addEventListener('mouseup', () => {
+				isDown = false;
+				slider.classList.remove('active');
+			});
+			slider.addEventListener('mousemove', (e) => {
+			if(!isDown) return;
+				e.preventDefault();
+				const x = e.pageX - slider.offsetLeft;
+				const walk = (x - startX) * 1; //scroll-fast
+				slider.scrollLeft = scrollLeft - walk;
+			});
+
+			var p = $(slider).closest('.wrap-slider');
+			p.find('.arrows svg').click(function(e) {
+				var to_left = $(this).hasClass('icon-larrow');
+				var step = 281 * 3;
+				var walk = to_left ? slider.scrollLeft - step : slider.scrollLeft + step
+				slider.scroll({
+					left: walk,
+					top: 0,
+					behavior: 'smooth'
+				});
+			})
+		});	
+	}
+
+
 });
-
-
-const slider = document.querySelector('.gslider');
-if(slider) {
-	let isDown = false;
-	let startX;
-	let scrollLeft;
-	slider.addEventListener('mousedown', (e) => {
-	isDown = true;
-	slider.classList.add('active');
-	startX = e.pageX - slider.offsetLeft;
-	scrollLeft = slider.scrollLeft;
-	});
-	slider.addEventListener('mouseleave', () => {
-	isDown = false;
-	slider.classList.remove('active');
-	});
-	slider.addEventListener('mouseup', () => {
-	isDown = false;
-	slider.classList.remove('active');
-	});
-	slider.addEventListener('mousemove', (e) => {
-	if(!isDown) return;
-	e.preventDefault();
-	const x = e.pageX - slider.offsetLeft;
-	const walk = (x - startX) * 1; //scroll-fast
-	slider.scrollLeft = scrollLeft - walk;
-	});
-}

@@ -24,6 +24,8 @@
 	<meta name="twitter:image" content="<?= G::$website['og:image'] ?>">
 	<meta name="twitter:site" content="@<?= G::$website['site_name'] ?>">
 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
 
 	<?php if(G::$canonical) echo '<link rel="canonical" href="https://example.com/'.G::$canonical.'" />'; ?>
 
@@ -61,6 +63,6 @@
 		<script defer src="/assets/main.js"></script>
 	
 </head>
-<body class="<?= implode(' ', G::$body_class) ?> tmp-<?= self::$template ?>">
+<body class="<?= implode(' ', G::$body_class) ?>">
 
 	<?php if(G::$settings['navbar']) require_once('snippets/navbar.php');?>

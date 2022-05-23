@@ -174,7 +174,7 @@
 
 					
 					<label for="apply-pay">
-						<input type="radio" name="agz-pay" id="apply-pay" value="a-pay" <?= $_POST['agz-pay'] == 'a-pay' ? 'checked' : '' ?>>
+						<input type="radio" name="agz-pay" id="apply-pay" value="a-pay" <?= !empty($_POST['agz-pay']) && $_POST['agz-pay'] == 'a-pay' ? 'checked' : '' ?>>
 						<div class="wrap">
 							<div>Apple Pay</div>
 							<p>Unlimited users and unlimited individual data.</p>
@@ -182,7 +182,7 @@
 						<img src="/assets/icons/a-pay.svg" alt="a-pay">
 					</label>
 					<label for="google-pay">
-						<input type="radio" name="agz-pay" id="google-pay" value="g-pay" <?= $_POST['agz-pay'] == 'g-pay' ? 'checked' : '' ?>>
+						<input type="radio" name="agz-pay" id="google-pay" value="g-pay" <?= !empty($_POST['agz-pay']) && $_POST['agz-pay'] == 'g-pay' ? 'checked' : '' ?>>
 						<div class="wrap">
 							<div>Google Pay</div>
 							<p>You will be redirected to the Google pay website after submitting your order</p>
@@ -190,15 +190,13 @@
 						<img src="/assets/icons/g-pay.svg" alt="g-pay">
 					</label>
 					<label for="amazone-pay">
-						<input type="radio" name="agz-pay" id="amazone-pay" value="z-pay" <?= $_POST['agz-pay'] == 'z-pay' ? 'checked' : '' ?>>
+						<input type="radio" name="agz-pay" id="amazone-pay" value="z-pay" <?= !empty($_POST['agz-pay']) && $_POST['agz-pay'] == 'z-pay' ? 'checked' : '' ?>>
 						<div class="wrap">
 							<div>Amazon Pay</div>
 							<p>You will be redirected to the Amazonwebsite after submitting your order</p>
 						</div>
 						<img src="/assets/icons/z-pay.svg" alt="z-pay">
 					</label>
-
-
 				</form>	
 
 			</div>
@@ -212,19 +210,19 @@
 		<div class="right">
 			<div class="slider">
 				<div class="arrows ar-left">
-					<img src="/assets/icons/ar-left.svg" alt="arrow-left">
+					<?= G::icon('larrow'); ?>
 				</div>
 				<div class="prod-cards">
 					<?php foreach([
 						['name' => '50$ Balance', 'class' => 'active', 'icon' => 'gold-rubin', 'price' => '50', 'desc' => 'Add credit do Your balance, Balance can be used to solve captchas or purchase licenses for Bots in Our "Bots Gallery"'],
-						['name' => '5$ Balance', 'icon' => 'rubin2', 'price' => '5', 'desc' => 'Add credit do Your balance, Balance can be used to solve captchas or purchase licenses for Bots in Our "Bots Gallery"'],
+						['name' => '5$ Balance', 'icon' => 'rubin', 'price' => '5', 'desc' => 'Add credit do Your balance, Balance can be used to solve captchas or purchase licenses for Bots in Our "Bots Gallery"'],
 						['name' => '20$ Balance', 'icon' => 'rubin2', 'price' => '20', 'desc' => 'Add credit do Your balance, Balance can be used to solve captchas or purchase licenses for Bots in Our "Bots Gallery"'],
 					] as $prod) { ?>
 						<div class="slide prod animate__animated <?= $prod['class'] ?? '' ?>" data-price="<?= $prod['price'] ?>">
 							<h5>Credit</h5>
 							<div class="wrap">
 								<!-- some one please kill designer -->
-								<img class="<?= $prod['icon'] ?>" src="/assets/icons/<?= $prod['icon'] ?>.svg" alt="<?= $prod['name'] ?>">
+								<?= G::icon($prod['icon']); ?>
 							</div>
 							<div class="price">$<?= $prod['price'] ?><i>/Credit</i></div>
 							<p>Buying this option will add <?= $prod['price'] ?>$ to Your balance</p>
@@ -232,7 +230,7 @@
 					<?php } ?>
 				</div>
 				<div class="arrows ar-right">
-					<img src="/assets/icons/ar-right.svg" alt="arrow-right">
+				<?= G::icon('rarrow'); ?>
 				<div>
 			</div>
 		</div>

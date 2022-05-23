@@ -33,8 +33,10 @@
 			<div class="sub-sec2">
 				<?php 
 					foreach(['99% uptime','Easy integration','Pay as you go','Resolve 10,000+ captchas/minute','Cheapest price on the market'] as $item) {?>
-						<?= G::icon('checked', 28, 26); ?>
-						<span><?= $item; ?></span>						
+						<div>
+							<?= G::icon('checked', 28, 26); ?>
+							<span><?= $item; ?></span>
+						</div> 
 					<?php }
 				?>
 			</div>
@@ -141,7 +143,7 @@
 				] as $prod) { ?>
 					<div class="prod-card">
 						<h5><?= $prod['name'] ?></h5>
-						<?= G::icon($prod['icon'], 132, 120); ?>
+						<?= G::icon($prod['icon']); ?>
 						<div class="price">$<?= $prod['price'] ?></div>
 						<p><?= $prod['desc'] ?></p>
 					</div>
@@ -153,7 +155,7 @@
 	<div class="section-6">
 		<h3 class="sec-title">Extras</h3>
 		<p>Extra addons You could add to enjoy the best experience from our Service</p>
-		<div class="cards gslider">
+		<div class="slider-row">
 			<?php 
 				foreach([
 					['name' => 'Discord Role', 'subtitle' => 'For Bot Operators', 'price' => '50<i>/Montly</i>', 'desc' => 'Talk With other Bot Operators Freely to exchange Knowledge'],
@@ -161,8 +163,9 @@
 					['name' => 'Faster Speed Upgrade', 'subtitle' => 'You Need Captchas Solved Faster?', 'price' => '25<i>/Montly</i>', 'desc' => 'From 5 Seconds to Instant/1 Second'],
 					['name' => 'More Simultaneous', 'subtitle' => 'You Need More Captchas Solved at the same time?', 'price' => '15<i>/Montly</i>', 'desc' => '50, 100, 999'],
 					['name' => 'More Simultaneous', 'subtitle' => 'You Need More Captchas Solved at the same time?', 'price' => '15<i>/Montly</i>', 'desc' => '50, 100, 999'],
+					['name' => 'More Simultaneous', 'subtitle' => 'You Need More Captchas Solved at the same time?', 'price' => '15<i>/Montly</i>', 'desc' => '50, 100, 999'],
 				] as $prod) { ?>
-					<div class="prod-card">
+					<div class="slide">
 						<h5><?= $prod['name'] ?></h5>
 						<span><?= $prod['subtitle'] ?></span>
 						<div class="price">$<?= $prod['price'] ?></div>
