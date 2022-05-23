@@ -14,33 +14,10 @@
 *.rej
 *.zip
 
-# Ignore all files and directories starting with . or ~ or ._ or ending with ~
-.*
-~*
-*~
-._*
-# but track
-!.browserslist
-!.editorconfig
-!.gitattributes
-!.github
-!.gitignore
-!.jscsrc
-!.jshintignore
-!.travis.yml
-
 # Ignore all files with .lock extentions
 *.lock
 # but track
 !composer.lock
-
-# OS or Editor files and folders
-*.code-workspace
-*.elc
-*.esproj
-*.komodoproject
-*.sublime*
-*.tmproj*
 
 # Dependencies
 bower_components
