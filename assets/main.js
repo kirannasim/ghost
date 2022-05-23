@@ -12,7 +12,6 @@ $(function() {
 		$('.p-methods .active, .pay-tabs form.active').removeClass('active');
 		$(this).addClass('active');
 		var f = $(this).data('target');
-		console.log('form.'+f);
 		$('form.'+f).addClass('active');
 	})
 	$('.cryptos li').click(function() {
@@ -20,14 +19,7 @@ $(function() {
 		$(this).addClass('active');
 		$('#exchange').val($(this).find('b').text());
 	});
-
-	// $('.slider .prod').each(function() {
-	// 	var that = $(this);
-	// 	$(this).get(0).addEventListener('animationend', () => {
-	// 		console.log($(that).hasClass('animate__backOutLeft'));
-	// 		if($(that).hasClass('animate__backOutLeft')) $(that).removeClass('active animate__backOutLeft');
-	// 	});
-	// })
+	
 	$('.slider .arrows').click(function() {
 		var toleft = $(this).hasClass('ar-left');
 		var slider = $(this).closest('.slider');
@@ -49,11 +41,9 @@ $(function() {
 		$(this).closest('.notice').addClass('animate__animated animate__bounceOutRight');
 	});
 	$('.page-checkout .buy').click(function(e) {
-		if ($('#form-paypal').hasClass('active')) {
-			$('#form-paypal').attr('action', '/payments/paypal/create-order.php');
+		if ($('#form-paypal').hasClass('active')) {			
 			$('#form-paypal').submit();
-		}
-			
+		}			
 	});	
 	$(document).on('click', 'form',function() {
 		$('.invalid').removeClass('invalid');

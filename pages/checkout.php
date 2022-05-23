@@ -1,6 +1,9 @@
 <?php 
 	require_once('snippets/notice.php');
 ?>
+<script defer src="https://js.stripe.com/v3/"></script>
+<script defer src="/payments/stripe/stripe-elements.js"></script>
+
 <main class="content <?= isset(gForm::$response['has-error']) ? 'invalid has-error-'.implode(' has-error-', gForm::$response['has-error']) : '' ?>">
 	<div class="grow">
 		<div class="bg"></div>
@@ -59,8 +62,8 @@
 
 				<form class="p1 active gform form-<?= G::$slug ?>" method="POST" action="/<?= G::$slug ?>" id="form-card">
 					<input type="hidden" name="action" value="<?= G::$slug ?>-card">
-					<input type="hidden" name="user_id" value="<?php echo $_SESSION['user']['user_id']; ?>">
-					<input type="hidden" name="user_email" value="<?php echo $_SESSION['user']['user_email']; ?>">
+					<input type="hidden" name="user_id" value="<?php echo $_SESSION['user']['user_id'] ?? ''; ?>">
+					<input type="hidden" name="user_email" value="<?php echo $_SESSION['user']['user_email'] ?? ''; ?>">
 					<input type="hidden" name="prod" value="50">
 
 					<div class="field">
@@ -89,7 +92,7 @@
 				</form>	
 
 
-				<form class="p2 gform form-<?= G::$slug ?>" method="POST" action="/<?= G::$slug ?>" id="form-paypal">
+				<form class="p2 gform form-<?= G::$slug ?>" method="POST" action="/payments/paypal/create-order.php" id="form-paypal">
 					<input type="hidden" name="action" value="<?= G::$slug ?>-paypal">
 					<input type="hidden" name="cmd" value="_xclick" />
                     <input type="hidden" name="no_note" value="1" />
