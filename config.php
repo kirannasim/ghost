@@ -1,9 +1,9 @@
 <?php
 class Config {
-    const DOMAIN_URL    = 'http://15.188.239.199';
+    const DOMAIN_URL    = 'http://domain.com';
 
     const PAYPAL_CONFIG = array(
-        'email'         => 'sb-nkcuf16525908@business.example.com',
+        'email'         => 'sb-tdyt416588660@business.example.com',
         'return_url'    => Config::DOMAIN_URL . '/payments/paypal/success.php',
         'cancel_url'    => Config::DOMAIN_URL . '/payments/paypal/cancel.php',
         'notify_url'    => Config::DOMAIN_URL . '/payments/paypal/notify.php',
@@ -22,5 +22,5 @@ class Config {
         'db_name'       => 'ghost'
     );
 
-    const COOKIE_EXPIRE_DAYS    = 30;
+    const COOKIE_EXPIRE_DAYS = 30;
 }

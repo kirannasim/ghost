@@ -12,6 +12,7 @@
 		"templates" => [
 			"account/auth" => ["login", "registration", "reset-password", "new-password"],
 			"account/dashboard" => ["account"],
+			"account/email-verification" => ["email-verification"],
 			"admin/dashboard" => ["admin"],
 			"admin/dashboard-earnings" => ["earnings"],
 		],

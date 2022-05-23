@@ -54,8 +54,9 @@
 						</div>
 					<?php } ?>
 
-					<?php if(G::$slug == 'new-password') {?>
+					<?php if(G::$slug == 'new-password') {?>						
 						<div class="field">
+							<input type="hidden" name="token" id="token" value="<?php echo $_GET['t']; ?>">
 							<input type="password" name="password" id="password" placeholder="Enter new password">
 						</div>
 					<?php } ?>

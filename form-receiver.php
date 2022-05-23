@@ -1,14 +1,6 @@
 <?php 
-	require 'vendor/phpmailer/phpmailer/src/Exception.php';
-	require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
-	require 'vendor/phpmailer/phpmailer/src/SMTP.php';
-
-	use PHPMailer\PHPMailer\PHPMailer;
-	use PHPMailer\PHPMailer\Exception;
-	use PHPMailer\PHPMailer\SMTP;
-
 	include_once __DIR__ . '/config.php';
-	include_once __DIR__ . '/db.php';	
+	include_once __DIR__ . '/db.php';		
 
 	class gForm {
 		static $response;
@@ -56,41 +48,24 @@
 	 * 
 	 * $email: Sender email
 	 */
-	function sendmail_reset_pwd( $email, $token ) {
-		$link = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]/reset-password?t=$token";
+	function sendmail_reset_pwd( $email, $token ) {		
+		$link = Config::DOMAIN_URL . '/new-password?t=' . $token;
+
+		$subject = 'Password restoration';
 		$message = "Hello, click on this <a href=\"$link\">link</a> to reset password.";
 		$message = wordwrap( $message, 70 );
 
-		var_dump($message);
+		return $message;
 
-		$mail = new PHPMailer( true );
+		$sender = 'admin@ghost.com';
+		$senderName = 'Admin';
 
-		try {
-			//Server settings
-			$mail->SMTPDebug = SMTP::DEBUG_OFF;                         //Enable verbose debug output
-			$mail->isSMTP();                                            //Send using SMTP
-			$mail->Host       = 'ses-smtp-user.20220523-172856';        //Set the SMTP server to send through
-			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-			$mail->Username   = 'AKIA3STHE3DVDNVOPUEK';                     //SMTP username
-			$mail->Password   = 'BPC6mSyq5lBhR+YlP1ccxqgMPBNu07R2RxpodsPwydbq';                               //SMTP password
-			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-			$mail->Port       = 465;
+		require_once __DIR__ . '/lib/Mail.php';
 
-			//Recipients
-			$mail->setFrom( 'from@example.com', 'Mailer' );
-			$mail->addAddress( $email );
+		$mail = new Mail();
+		$result = $mail->sendMail( $subject, $message, $sender, $senderName, $email );
 
-			//Content
-			$mail->isHTML( true );
-			$mail->Subject = 'Password restoration';
-			$mail->Body    = $message;
-
-			$mail->send();
-			
-			return gForm::init( ['status' => 'success', 'msg' => 'Please check your e-mail and click on the link sent to your e-mail.'] );
-		} catch (Exception $e) {
-			return gForm::init( ['status' => 'error', 'msg' => 'Something is wrong. Please try again.'] );
-		}
+		return gForm::init( ['status' => $result['status'], 'msg' => $result['message']] );
 	}
 
 	/**
@@ -99,40 +74,24 @@
 	 * $email: Sender email
 	 */
 	function sendmail_verify_email( $email, $token ) {
-		$link = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]/email-verification?t=$token";
+		$link = Config::DOMAIN_URL . '/email-verification?t=' . $token;
+
+		$subject = 'Email verification';
 		$message = "Successfully signed up. Please verify your email. click on this <a href=\"$link\">link</a> to verify your email.";
 		$message = wordwrap( $message, 70 );
-
+		
 		return $message;
 
-		$mail = new PHPMailer( true );
 
-		try {
-			//Server settings
-			$mail->SMTPDebug = SMTP::DEBUG_OFF;                         //Enable verbose debug output
-			$mail->isSMTP();                                            //Send using SMTP
-			$mail->Host       = 'ses-smtp-user.20220523-172856';        //Set the SMTP server to send through
-			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-			$mail->Username   = 'AKIA3STHE3DVDNVOPUEK';                     //SMTP username
-			$mail->Password   = 'BPC6mSyq5lBhR+YlP1ccxqgMPBNu07R2RxpodsPwydbq';                               //SMTP password
-			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-			$mail->Port       = 465;
+		$sender = 'admin@ghost.com';
+		$senderName = 'Admin';
 
-			//Recipients
-			$mail->setFrom( 'from@example.com', 'Mailer' );
-			$mail->addAddress( $email );
+		require_once __DIR__ . '/lib/Mail.php';
 
-			//Content
-			$mail->isHTML( true );
-			$mail->Subject = 'Email verification';
-			$mail->Body    = $message;
+		$mail = new Mail();
+		$result = $mail->sendMail( $subject, $message, $sender, $senderName, $email );
 
-			$mail->send();
-			
-			return gForm::init( ['status' => 'success', 'msg' => 'Please check your e-mail and click on the link sent to your e-mail.'] );
-		} catch (Exception $e) {
-			return gForm::init( ['status' => 'error', 'msg' => 'Something is wrong. Please try again.'] );
-		}
+		return gForm::init( ['status' => $result['status'], 'msg' => $result['message']] );
 	}
 
 	/**
@@ -143,6 +102,16 @@
 	 * $remember
 	 */
 	function login( $conn, $email, $password, $remember ) {
+		if ( $email == '' ) {
+			return gForm::init( ['status' => 'error', 'msg' => 'Email address is required.'] );
+		}
+
+		validate_email( $email );
+
+		if ( $password == '' ) {
+			return gForm::init( ['status' => 'error', 'msg' => 'Password is required.'] );
+		}
+
 		$email = clean_inp( $email );
 		$password = clean_inp( $password );	
 
@@ -166,10 +135,22 @@
 						setcookie( 'password', '' );
 					}
 				}
+
+				if ( $user['verified'] == '0' ) {
+					return gForm::init( ['status' => 'error', 'msg' => 'Please verify you email first.'] );
+				}
 				
 				$_SESSION['user']['user_id'] = $user['user_id'];
 				$_SESSION['user']['user_email'] = $user['user_email'];
-				header('Location: /account');
+				$_SESSION['user']['user_role'] = $user['user_role'];
+
+				G::$user = $_SESSION["user"];
+
+				if ( $user['user_role'] == '1' )
+					header('Location: /admin');
+				else
+					header('Location: /account');
+
 				return;
 			} else {
 				return gForm::init( ['status' => 'error', 'msg' => 'Email address or password is not correct.'] );
@@ -191,6 +172,20 @@
 		// $email = clean_inp( $email );
 		// $password = clean_inp( $password );	
 
+		if ( $email == '' ) {
+			return gForm::init( ['status' => 'error', 'msg' => 'Email address is required.'] );
+		}
+
+		validate_email( $email );
+
+		if ( $password == '' ) {
+			return gForm::init( ['status' => 'error', 'msg' => 'Password is required.'] );
+		}
+
+		if ( $password !== $password2 ) {
+			return gForm::init( ['status' => 'error', 'msg' => 'Password is not matched.'] );
+		}
+
 		$sql = "SELECT * FROM tbl_users WHERE user_email = '$email'";
 		$result = mysqli_query( $conn, $sql );
 		$user = mysqli_fetch_array( $result );
@@ -202,7 +197,7 @@
 			$password_hash = md5( $password );
 			$api_key = generate_api_key();
 			$sql = "INSERT INTO tbl_users (user_email, user_password, user_api_key, token) VALUES ('$email', '$password_hash', '$api_key', '$token')";
-			
+
 			if ( mysqli_query( $conn, $sql ) === true ) {
 				
 				if ( ! empty( $remember ) ) {
@@ -218,7 +213,9 @@
 					}
 				}
 
-				return gForm::init( ['status' => 'error', 'msg' => sendmail_verify_email( $email, $token )] );
+				// sendmail_verify_email( $email, $token );
+
+				return gForm::init( ['status' => 'warn', 'msg' => 'Successfully signed up. Please verify your email ' . sendmail_verify_email( $email, $token )] );
 
 				// header( "Location: /login" );
 				// return gForm::init( ['status' => 'success', 'msg' => 'Successfully signed up. Please verify your email'] );
@@ -234,6 +231,12 @@
 	 * $email: sender email 
 	 */
 	function forgot_password( $conn, $email ) {
+		if ( $email == '' ) {
+			return gForm::init( ['status' => 'error', 'msg' => 'Email address is required.'] );
+		}
+
+		validate_email( $email );
+
 		$email = clean_inp( $email );
 
 		$sql = "SELECT * FROM tbl_users WHERE user_email = '$email'";
@@ -246,10 +249,13 @@
 			$sql = "INSERT INTO tbl_password_resets(email, token) VALUES ('$email', '$token')";
 			mysqli_query( $conn, $sql );
 
-			sendmail_reset_pwd( $email, $token );
+			return gForm::init( ['status' => 'warn', 'msg' => 'Please check your email inbox.' . sendmail_reset_pwd( $email, $token )] );
+
+			// sendmail_reset_pwd( $email, $token );
+
+			// return gForm::init( ['status' => 'success', 'msg' => 'Please check your email inbox.'] );
 
 			// header( "Location: /login" );
-			return;
 		} else {
 			return gForm::init( ['status' => 'error', 'msg' => 'E-mail address is not correct.'] );
 		}
@@ -260,7 +266,7 @@
 	 * 
 	 * $token: token
 	 */
-	function email_verification( $db, $token ) {
+	function email_verification( $db, $token ) {		
 		$query = "SELECT * FROM tbl_users WHERE token = ?";
 		$paramValue = array(
 			$token
@@ -274,9 +280,7 @@
 				$token
 			);
 			$paramType = "s";
-			$db->execute( $query, $paramType, $paramValue );
-
-			header( "Location: /account" );
+			$db->execute( $query, $paramType, $paramValue );			
 		}
 	}
 
@@ -285,13 +289,12 @@
 	 * 
 	 * $password: New password
 	 */
-	function reset_password( $conn, $password ) {
-		if ( ! isset( $_GET['token'] ) ) {
-			header( "Location: /" );
-			return;
+	function new_password( $conn, $password ) {
+		if ( $password == '' ) {
+			return gForm::init( ['status' => 'error', 'msg' => 'Password is required.'] );
 		}
 		
-		$token = $_GET['token'];
+		$token = $_POST['token'];
 		$sql = "SELECT email FROM tbl_password_resets WHERE token='$token' AND TIME_TO_SEC(TIMEDIFF(created_at, NOW())) < 3600";
 		$result = mysqli_query( $conn, $sql );
 		$record = mysqli_fetch_array( $result );
@@ -349,14 +352,14 @@
 		} 
 		
 		if ( 'registration' === $action ) {
-			if ( isset ($_POST['email'] ) && isset( $_POST['password'] ) && isset( $_POST['password2'] ) ) {
+			if ( isset ( $_POST['email'] ) && isset( $_POST['password'] ) && isset( $_POST['password2'] ) ) {
 				signup( $conn, $_POST['email'], $_POST['password'], $_POST['password2'], 1 );
 			}			
 		} 
 		
 		if ( 'new-password' === $action ) {
 			if ( isset( $_POST['password'] ) ) {
-				reset_password( $conn, $_POST['password'] );
+				new_password( $conn, $_POST['password'] );
 			}
 		} 
 		
@@ -364,14 +367,8 @@
 			if ( isset( $_POST['email'] ) ) {
 				forgot_password( $conn, $_POST['email'] );
 			}
-		} 
+		} 		
 		
-		if ( 'email-verification' === $action ) {
-			if ( isset( $_GET['token'] ) ) {
-				email_verification( $db, $_GET['token'] );
-			}
-		} 
-
 		if ( 'logout' === $action ) {
 			session_destroy();
 		}

@@ -77,12 +77,24 @@
 			return $r;
 		}
 
-		static function if_redirect() {
+		static function if_redirect() {			
+			if(
+				self::$slug == 'admin' &&
+				( empty(self::$user) || !isset(self::$user['user_role']) || (isset(self::$user['user_role']) && self::$user['user_role'] == '0') )
+			) {
+				header('Location: /404');									
+			}
+
+			if(
+				self::$slug == 'account' &&
+				(isset(self::$user['user_role']) && self::$user['user_role'] == '1')
+			) {
+				header('Location: /admin');
+			}
 
 			if(
 				empty(self::$user) && (
-				self::$template == 'dashboard' || 
-				self::$slug == 'new-password')
+				self::$template == 'dashboard')
 			) {
 				self::set_notice(['status' => 'warn', 'msg' => 'You need to be logged in to view this page.']);
 				header('Location: /login');
@@ -143,7 +155,6 @@
 			require_once('footer.php');
 		}
 	}
-	G::init()::render();
-	
+	G::init()::render();	
 	
 ?>
