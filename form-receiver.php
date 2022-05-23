@@ -7,7 +7,8 @@
 	use PHPMailer\PHPMailer\Exception;
 	use PHPMailer\PHPMailer\SMTP;
 
-	include_once 'db.php';	
+	include_once __DIR__ . '/config.php';
+	include_once __DIR__ . '/db.php';	
 
 	class gForm {
 		static $response;
@@ -110,8 +111,8 @@
 		
 			if ( $user ) {
 				if ( ! empty( $remember ) ) {
-					setcookie( 'email', $email, time() + ( COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
-					setcookie( 'password', $password, time() + ( COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
+					setcookie( 'email', $email, time() + ( Config::COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
+					setcookie( 'password', $password, time() + ( Config::COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
 				} else {
 					if ( isset( $_COOKIE['email'] ) ) {
 						setcookie( 'email', '' );
@@ -160,8 +161,8 @@
 			if ( mysqli_query( $conn, $sql ) === true ) {
 				
 				if ( ! empty( $_POST['remember'] ) ) {
-					setcookie( 'email', $email, time() + ( COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
-					setcookie( 'password', $password, time() + ( COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
+					setcookie( 'email', $email, time() + ( Config::COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
+					setcookie( 'password', $password, time() + ( Config::COOKIE_EXPIRE_DAYS * 24 * 60 * 60 ) );
 				} else {
 					if ( isset( $_COOKIE['email'] ) ) {
 						setcookie( 'email', '' );

@@ -21,4 +21,6 @@ class Config {
         'pass'          => '',
         'db_name'       => 'eugene'
     );
+
+    const COOKIE_EXPIRE_DAYS    = 30;
 }
