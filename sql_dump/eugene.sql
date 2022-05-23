@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2022 at 08:26 PM
+-- Generation Time: May 23, 2022 at 02:39 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -38,16 +38,42 @@ CREATE TABLE `tbl_password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_payments`
+-- Table structure for table `tbl_payment`
 --
 
-CREATE TABLE `tbl_payments` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `payment_amount` int(11) NOT NULL,
-  `payment_method` int(11) NOT NULL COMMENT '1: Credit Card, 2: Paypal, 3: Crypto, 4: Apple Pay, 5: Google Pay, 6: Amazon Pay',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+CREATE TABLE `tbl_payment` (
+  `id` int(11) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `user_email` varchar(100) NOT NULL,
+  `payment_type` varchar(25) NOT NULL,
+  `order_hash` varchar(255) DEFAULT NULL,
+  `amount` double(10,2) NOT NULL,
+  `currency` varchar(25) NOT NULL DEFAULT 'usd',
+  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `order_status` varchar(25) NOT NULL,
+  `notes` text,
+  `name` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_payment`
+--
+
+INSERT INTO `tbl_payment` (`id`, `user_id`, `user_email`, `payment_type`, `order_hash`, `amount`, `currency`, `order_date`, `order_status`, `notes`, `name`) VALUES
+(1, 6, 'test@app.com', 'stripe', 'Ck01QY3FWs37fSr3f', 50.00, 'usd', '2022-05-23 07:21:39', 'Pending', '', 'test'),
+(2, 6, 'test@app.com', 'stripe', 'BWIgIRaTcoMAc59GF', 50.00, 'usd', '2022-05-23 07:30:44', 'Pending', '', 'test'),
+(3, 6, 'test@app.com', 'stripe', '2j8Qb5wiDSl35smQf', 50.00, 'usd', '2022-05-23 07:43:32', 'Pending', '', 'test'),
+(4, 6, 'test@app.com', 'stripe', 'jMc9s0hAp2A2Ku1yd', 50.00, 'usd', '2022-05-22 22:59:37', 'complete', '', 'test'),
+(5, 6, 'test@app.com', 'stripe', 'bSaTS4jmegsNB2iGJ', 50.00, 'usd', '2022-05-22 23:09:07', 'complete', '', 'test'),
+(6, 6, 'test@app.com', 'stripe', 'V1kWEDiOGv5f1x6nk', 20.00, 'usd', '2022-05-22 23:23:35', 'complete', '', 'test'),
+(7, 6, 'test@app.com', 'stripe', 'tiatyGqXRvLseoQoo', 50.00, 'usd', '2022-05-22 23:27:14', 'complete', '', 'test'),
+(8, 6, 'test@app.com', 'stripe', 'YSURCzdMTLas772YT', 50.00, 'usd', '2022-05-23 11:11:39', 'Pending', '', 'Test'),
+(9, 6, 'test@app.com', 'stripe', 'dLB8yz2NtycHQ0ILd', 50.00, 'usd', '2022-05-23 02:12:26', 'complete', '', 'test'),
+(22, 6, 'test@app.com', 'paypal', '4DUJZM3AVUMC6B0SePGRklG3fxiQJ0', 50.00, 'usd', '2022-05-23 11:45:14', 'complete', '', 'test@app.com'),
+(23, 6, 'test@app.com', 'paypal', '4DUJZM3AVUMC6_ZVXRMHINzXOwmtK1z', 50.00, 'usd', '2022-05-23 11:47:20', 'complete', '', 'test@app.com'),
+(24, 6, 'test@app.com', 'paypal', '', 50.00, 'usd', '2022-05-23 11:51:42', 'canceled', '', 'test@app.com'),
+(25, 6, 'test@app.com', 'stripe', '9kXt8VAik7jIjK8hp', 50.00, 'usd', '2022-05-23 10:33:38', 'Completed', '', 'test'),
+(26, 6, 'test@app.com', 'stripe', 'iOLkt86n5vOmyzqCZ', 50.00, 'usd', '2022-05-23 12:24:32', 'Completed', '', 'test');
 
 -- --------------------------------------------------------
 
@@ -143,7 +169,8 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`user_id`, `user_email`, `user_password`, `user_credit`, `user_threads_limit`, `user_api_key`) VALUES
-(6, 'test@app.com', '202cb962ac59075b964b07152d234b70', 0, 0, '9B0B06EEAE2BD9C-03-268D');
+(6, 'test@app.com', '202cb962ac59075b964b07152d234b70', 420, 0, '9B0B06EEAE2BD9C-03-268D'),
+(7, 'test1@app.com', '202cb962ac59075b964b07152d234b70', 0, 0, 'C9948CA09E5C909-93-6551');
 
 --
 -- Indexes for dumped tables
@@ -153,6 +180,12 @@ INSERT INTO `tbl_users` (`user_id`, `user_email`, `user_password`, `user_credit`
 -- Indexes for table `tbl_password_resets`
 --
 ALTER TABLE `tbl_password_resets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_payment`
+--
+ALTER TABLE `tbl_payment`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -184,6 +217,12 @@ ALTER TABLE `tbl_password_resets`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tbl_payment`
+--
+ALTER TABLE `tbl_payment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
 -- AUTO_INCREMENT for table `tbl_services`
 --
 ALTER TABLE `tbl_services`
@@ -199,7 +238,7 @@ ALTER TABLE `tbl_track`
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
