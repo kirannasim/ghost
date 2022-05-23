@@ -24,6 +24,8 @@
 	<meta name="twitter:image" content="<?= G::$website['og:image'] ?>">
 	<meta name="twitter:site" content="@<?= G::$website['site_name'] ?>">
 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
 
 	<?php if(G::$canonical) echo '<link rel="canonical" href="https://example.com/'.G::$canonical.'" />'; ?>	
 

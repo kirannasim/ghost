@@ -32,18 +32,11 @@
 			<p>We have the most active and helpful community that will satisfy any automation needs You might have</p>
 			<div class="sub-sec2">
 				<?php 
-					foreach(['99% uptime','Easy integration','Pay as you go','Resolve 10,000+ captchas/minute','Cheapest price on the market'] as $item) {?>						
-							<svg width="30" height="26" viewBox="0 0 30 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<circle opacity="0.3" cx="12.9779" cy="13.0229" r="12.9779" fill="#8E53F5"/>
-								<path fill-rule="evenodd" clip-rule="evenodd" d="M25.8818 2.12822C23.3123 3.67341 20.7946 5.58154 18.0202 8.08633C16.0534 9.862 15.5555 10.3496 13.9651 12.0573C13.2855 12.787 12.6116 13.5107 12.4675 13.6654L12.2055 13.9468L9.24419 12.0992C7.61542 11.083 6.25763 10.2515 6.2268 10.2515C6.19598 10.2515 5.68231 10.691 5.08535 11.2281L4 12.2047L4.96842 13.384C7.4823 16.4455 11.1174 21.1796 11.9155 22.4316C12.1158 22.7457 12.3002 23.0015 12.3252 23C12.3502 22.9985 12.6641 22.5424 13.0227 21.9865C14.6745 19.4256 17.708 15.2529 19.9732 12.4258C23.3322 8.23359 26.2834 5.12537 29.022 2.89558C29.5446 2.47 29.9847 2.09357 29.9998 2.05908C30.015 2.02451 29.1411 1.99805 28.0578 2.00011C26.3524 2.0035 26.0607 2.02068 25.8818 2.12822Z" fill="url(#paint0_linear_285_4936)"/>
-								<defs>
-								<linearGradient id="paint0_linear_285_4936" x1="30.0074" y1="2" x2="7.31892" y2="26.1095" gradientUnits="userSpaceOnUse">
-								<stop stop-color="#8C52F4"/>
-								<stop offset="1" stop-color="#DC81FF"/>
-								</linearGradient>
-								</defs>
-							</svg>
-						<span><?= $item; ?></span>						
+					foreach(['99% uptime','Easy integration','Pay as you go','Resolve 10,000+ captchas/minute','Cheapest price on the market'] as $item) {?>
+						<div>
+							<?= G::icon('checked', 28, 26); ?>
+							<span><?= $item; ?></span>
+						</div> 
 					<?php }
 				?>
 			</div>
@@ -59,22 +52,13 @@
 				<?php 
 					foreach(['Cheapest','Community','Most Stable','Support','Incredible'] as $item) {?>
 						<div>
-							<svg width="30" height="26" viewBox="0 0 30 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<circle opacity="0.3" cx="12.9779" cy="13.0229" r="12.9779" fill="#8E53F5"/>
-								<path fill-rule="evenodd" clip-rule="evenodd" d="M25.8818 2.12822C23.3123 3.67341 20.7946 5.58154 18.0202 8.08633C16.0534 9.862 15.5555 10.3496 13.9651 12.0573C13.2855 12.787 12.6116 13.5107 12.4675 13.6654L12.2055 13.9468L9.24419 12.0992C7.61542 11.083 6.25763 10.2515 6.2268 10.2515C6.19598 10.2515 5.68231 10.691 5.08535 11.2281L4 12.2047L4.96842 13.384C7.4823 16.4455 11.1174 21.1796 11.9155 22.4316C12.1158 22.7457 12.3002 23.0015 12.3252 23C12.3502 22.9985 12.6641 22.5424 13.0227 21.9865C14.6745 19.4256 17.708 15.2529 19.9732 12.4258C23.3322 8.23359 26.2834 5.12537 29.022 2.89558C29.5446 2.47 29.9847 2.09357 29.9998 2.05908C30.015 2.02451 29.1411 1.99805 28.0578 2.00011C26.3524 2.0035 26.0607 2.02068 25.8818 2.12822Z" fill="url(#paint0_linear_285_4936)"/>
-								<defs>
-								<linearGradient id="paint0_linear_285_4936" x1="30.0074" y1="2" x2="7.31892" y2="26.1095" gradientUnits="userSpaceOnUse">
-								<stop stop-color="#8C52F4"/>
-								<stop offset="1" stop-color="#DC81FF"/>
-								</linearGradient>
-								</defs>
-							</svg>
+						<?= G::icon('checked', 28, 26); ?>
 							<span><?= $item; ?></span>
 						</div>
 					<?php }
 				?>
 			</div>
-			<a href="/registration" class="btn">Sign Up</a>
+			<a href="/registration" class="btn">Check Documentation</a>
 		</div>
 		<div class="right">
 			<img width="681px" height="371px"  class="re1"
@@ -102,34 +86,64 @@
 					<div class="title"><?= $item['requests']; ?>$</div>
 					<div class="title"><?= $item['speed']; ?>/5.00 seconds</div> 
 					<div class="title" ><?= $item['success']; ?>%</div>
-					<div><?= ($item['status']) ? '<svg width="26 " height="26" viewBox="0 0 30 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<circle opacity="0.3" cx="12.9779" cy="13.0229" r="12.9779" fill="#8E53F5"/>
-								<path fill-rule="evenodd" clip-rule="evenodd" d="M25.8818 2.12822C23.3123 3.67341 20.7946 5.58154 18.0202 8.08633C16.0534 9.862 15.5555 10.3496 13.9651 12.0573C13.2855 12.787 12.6116 13.5107 12.4675 13.6654L12.2055 13.9468L9.24419 12.0992C7.61542 11.083 6.25763 10.2515 6.2268 10.2515C6.19598 10.2515 5.68231 10.691 5.08535 11.2281L4 12.2047L4.96842 13.384C7.4823 16.4455 11.1174 21.1796 11.9155 22.4316C12.1158 22.7457 12.3002 23.0015 12.3252 23C12.3502 22.9985 12.6641 22.5424 13.0227 21.9865C14.6745 19.4256 17.708 15.2529 19.9732 12.4258C23.3322 8.23359 26.2834 5.12537 29.022 2.89558C29.5446 2.47 29.9847 2.09357 29.9998 2.05908C30.015 2.02451 29.1411 1.99805 28.0578 2.00011C26.3524 2.0035 26.0607 2.02068 25.8818 2.12822Z" fill="url(#paint0_linear_285_4936)"/>
-								<defs>
-								<linearGradient id="paint0_linear_285_4936" x1="30.0074" y1="2" x2="7.31892" y2="26.1095" gradientUnits="userSpaceOnUse">
-								<stop stop-color="#8C52F4"/>
-								<stop offset="1" stop-color="#DC81FF"/>
-								</linearGradient>
-								</defs>
-							</svg>' : '-' ?></div>
+					<div><?= ($item['status']) ? G::icon('checked', 28, 26) : '-' ?></div>
 				</div>
 			<?php }?>
 		</div>
 	</div>
 
+	<div class="section-7">
+		<h2 class="sec-title">Automated One-Time and <br> Rented SMS-Verification</h2>
+		<div class="grow">
+			<div class="left">
+				<h3>One API KEY to Rule <br> them all</h3>
+				<p>We believe in efficiency and convenience, You are now able to use the same API-Key and Balance to purchase SMS Verification from over 50+ possible Countries.</p>
+				<div class="lists">
+					<ul class="small-list">
+						<?php 
+							foreach(['starting 0.03$/sMS','OVER 50+ Countries','All Existing Services','Possibility to Rent Up to 1 Week'] as $item) {?>
+								<li>
+									<?= G::icon('checked', 22, 20); ?>
+									<span><?= $item; ?></span>
+								</li>
+							<?php }
+						?>
+					</ul>
+					<ul>
+						<?php 
+							foreach(['No Need to Authenticate to check SMS History', 'Same Balance','Custom Panel (on request) for Rented Phone Numbers (Add Logo/Customize)'] as $item) {?>
+								<li>
+									<?= G::icon('checked', 22, 20); ?>
+									<span><?= $item; ?></span>
+								</li>
+							<?php }
+						?>
+					</ul>
+				</div>
+				<a href="/registration" class="btn">Learn more</a>
+			</div>
+			<div class="right">
+				<img width="502px" class="re1"
+					src="/assets/img/pages/home/country-logos.webp"
+					srcset="/assets/img/pages/home/country-logos@2x.webp 2x" alt="background"
+				>
+			</div>		
+		</div>
+	</div>
+
 	<div class="section-5">
 		<h3 class="sec-title">Purchase</h3>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+		<p>Credit purchased will be usable not only for captcha, But for all services We offer like Phone Numbers for verifications and Monthly Software Licenses</p>
 		<div class="cards">
 			<?php 
 				foreach([
-					['name' => '5$ Balance', 'icon' => 'rubin.svg', 'price' => '5', 'desc' => 'Add credit do Your balance, Balance can be used to solve captchas or purchase licenses for Bots in Our "Bots Gallery"'],
-					['name' => '50$ Balance', 'icon' => 'gold-rubin.svg', 'price' => '50', 'desc' => 'Add credit do Your balance, Balance can be used to solve captchas or purchase licenses for Bots in Our "Bots Gallery"'],
-					['name' => '20$ Balance', 'icon' => 'rubin.svg', 'price' => '20', 'desc' => 'Add credit do Your balance, Balance can be used to solve captchas or purchase licenses for Bots in Our "Bots Gallery"'],
+					['name' => '5$ Balance', 'icon' => 'rubin', 'price' => '5', 'desc' => 'Credit Balance to use all around the shop'],
+					['name' => '50$ Balance', 'icon' => 'gold-rubin', 'price' => '50', 'desc' => 'Credit Balance to use all around the shop'],
+					['name' => '20$ Balance', 'icon' => 'rubin', 'price' => '20', 'desc' => 'Credit Balance to use all around the shop'],
 				] as $prod) { ?>
 					<div class="prod-card">
 						<h5><?= $prod['name'] ?></h5>
-						<img width="115px" height="106px" src="/assets/icons/<?= $prod['icon'] ?>" alt="<?= $prod['name'] ?>">
+						<?= G::icon($prod['icon']); ?>
 						<div class="price">$<?= $prod['price'] ?></div>
 						<p><?= $prod['desc'] ?></p>
 					</div>
@@ -141,15 +155,17 @@
 	<div class="section-6">
 		<h3 class="sec-title">Extras</h3>
 		<p>Extra addons You could add to enjoy the best experience from our Service</p>
-		<div class="cards">
+		<div class="slider-row">
 			<?php 
 				foreach([
 					['name' => 'Discord Role', 'subtitle' => 'For Bot Operators', 'price' => '50<i>/Montly</i>', 'desc' => 'Talk With other Bot Operators Freely to exchange Knowledge'],
 					['name' => 'Code for You', 'subtitle' => 'You need code fixed? You need a custom bot?', 'price' => '100', 'desc' => 'Join Discord and Open a Ticket'],
 					['name' => 'Faster Speed Upgrade', 'subtitle' => 'You Need Captchas Solved Faster?', 'price' => '25<i>/Montly</i>', 'desc' => 'From 5 Seconds to Instant/1 Second'],
 					['name' => 'More Simultaneous', 'subtitle' => 'You Need More Captchas Solved at the same time?', 'price' => '15<i>/Montly</i>', 'desc' => '50, 100, 999'],
+					['name' => 'More Simultaneous', 'subtitle' => 'You Need More Captchas Solved at the same time?', 'price' => '15<i>/Montly</i>', 'desc' => '50, 100, 999'],
+					['name' => 'More Simultaneous', 'subtitle' => 'You Need More Captchas Solved at the same time?', 'price' => '15<i>/Montly</i>', 'desc' => '50, 100, 999'],
 				] as $prod) { ?>
-					<div class="prod-card">
+					<div class="slide">
 						<h5><?= $prod['name'] ?></h5>
 						<span><?= $prod['subtitle'] ?></span>
 						<div class="price">$<?= $prod['price'] ?></div>
@@ -159,8 +175,7 @@
 				<?php }
 			?>
 		</div>
-	</div>	
-
+	</div>
 
 
 </main>

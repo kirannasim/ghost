@@ -13,6 +13,7 @@
 			"account/auth" => ["login", "registration", "reset-password", "new-password"],
 			"account/dashboard" => ["account"],
 			"admin/dashboard" => ["admin"],
+			"admin/dashboard-earnings" => ["admin2"],
 		],
 		"alias" => [
 			"registration" => ["register", "sign-up", "signup"],

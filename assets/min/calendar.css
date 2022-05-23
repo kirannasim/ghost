@@ -27,8 +27,8 @@
   --color-btn-secondary-disabled-border: #b5bbc4;
   --color-border-default: #ddd;
   --color-border-locked: #f9f9f9;
-  --day-width: 42px;
-  --day-height: 37px;
+  --day-width: 14,2857142857%;
+  --day-height: 0;
   --border-radius: 2px;
   --primary-color: #6b82ff;
   --secondary-color: #748194;
@@ -71,6 +71,7 @@
   box-shadow: 0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
   height: auto;
   left: 0;
+  width: 395px;
   position: relative;
   top: 0;
   transform: scaleY(1);
@@ -79,6 +80,8 @@
   background-color: var(--color-bg-default);
   border: 1px #3E4653 solid;
   border-radius: 12px;
+  z-index: -2;
+  position: relative;
 }
 .container > footer,
 .container > header {
@@ -198,12 +201,14 @@
   display: flex;
   text-align: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 13px 0;
+  margin: 2px 13px;
 }
 .calendar > .header .month-name {
   flex: 1;
-  font-size: 15px;
+  font-size: 24px;
   font-weight: 500;
+  font-family: "Poppins", sans-serif;
 }
 .calendar > .header .month-name > span {
   font-weight: 700;
@@ -217,7 +222,7 @@
   cursor: pointer;
   display: flex;
   justify-content: center;
-  padding: 4px 7px;
+  padding: 6px 16px;
   position: absolute;
 }
 .calendar > .header button:hover > img,
@@ -230,13 +235,13 @@
   fill: #fff;
   color: var(--color-btn-secondary-fg);
   pointer-events: none;
-  transform: scale(0.7);
 }
 .calendar > .daynames-row,
 .calendar > .days-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  row-gap: 2px;
+  row-gap: 7px;
+  margin-left: 24px;
 }
 .calendar > .daynames-row > .day,
 .calendar > .daynames-row > .dayname,
@@ -246,13 +251,16 @@
   cursor: default;
   display: flex;
   flex-direction: column;
-  font-size: 13px;
+  font-size: 18px;
+  margin-left: -14px;
   justify-content: center;
 }
 .calendar > .daynames-row > .dayname {
   color: var(--color-fg-accent);
-  font-size: 12px;
-  padding: 5px 0;
+  font-size: 14px;
+  padding: 18px 0;
+  font-family: 'Poppins', sans-serif;
+  margin-left: -32px;
 }
 .calendar > .days-grid > .day {
   border: 1px solid transparent;
@@ -262,11 +270,12 @@
   max-width: var(--day-width);
   min-height: var(--day-height);
   min-width: var(--day-width);
-  padding: 10px 0;
+  padding: 23px 0;
+  aspect-ratio: 1 / 1;
   width: var(--day-width);
 }
 .calendar > .days-grid > .day:hover {
-  background: rgba(62, 70, 83, 0.2);
+  background: rgb(14, 21, 35);
   color: var(--color-fg-primary);
   border-radius: 30px;
 }
@@ -408,7 +417,7 @@
 .range-plugin-tooltip:before {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid rgba(0, 0, 0, 0.12);
+  border-top: 5px solid rgb(14, 21, 35);
   bottom: -5px;
   content: "";
   left: calc(50% - 5px);
@@ -431,28 +440,52 @@
   border-top-right-radius: var(--border-radius);
 }
 .container.range-plugin .calendar > .days-grid > .day.in-range {
-  background-color: rgba(62, 70, 83, 0.2);
+  background-color: rgb(14, 21, 35);
   border-radius: 0;
+  position: relative;
+}
+.container.range-plugin .calendar > .days-grid > .day.in-range:before {
+  content: "";
+  background-color: rgb(14, 21, 35);
+  border-radius: 0;
+  display: block;
+  width: 120%;
+  position: absolute;
+  z-index: -1;
+  height: calc(100% + 2px);
 }
 .container.range-plugin .calendar > .days-grid > .day.end,
 .container.range-plugin .calendar > .days-grid > .day.start {
   background-color: #3E4653;
   border-radius: 30px;
+  z-index: 1;
+  position: relative;
   color: var(--color-fg-selected);
 }
-.day.end:before, .day.start:after{
+.day.end:before, .day.start:before{
   content: " ";
   display: block;
-  background-color: rgba(62, 70, 83, 0.2);
-  width: calc(50%);
+  background-color: rgb(14, 21, 35);
+  width: calc(50% + 5px);
   height: calc(100% + 2px);
   position: absolute;
+  z-index: -2;
+}
+.day.end:after, .day.start:after{
+  content: " ";
+  display: block;
+  background-color:#3E4653;
+  border-radius: 50px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  position: absolute;
+  z-index: -1;
 }
 .day.end:before{
-  left: -1px;
+  left: -5px;
 }
-.day.start:after{
-  right: -1px;
+.day.start:before{
+  right: -5px;
 }
 .day.end.flipped:before{
   right: -1px;

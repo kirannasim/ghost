@@ -151,7 +151,7 @@
 		$user = mysqli_fetch_array( $result );
 
 		if ( $user ) {
-			return gForm::init( ['status' => 'error', 'msg' => 'Email address address already exists.'] );
+			return gForm::init( ['status' => 'error', 'msg' => 'Email address already exists.'] );
 		} else {
 			$password_hash = md5( $password );
 			$api_key = generate_api_key();
@@ -258,7 +258,8 @@
 	
 		if ( 'login' === $action ) {			
 			if ( isset( $_POST['email'] ) && isset( $_POST['password'] ) ) {
-				login( $conn, $_POST['email'], $_POST['password'], 1 );
+				test_start_session();
+				// login( $conn, $_POST['email'], $_POST['password'], 1 );
 			}
 		} 
 		
@@ -286,6 +287,16 @@
 
 		if ( 'logout' === $action ) {
 			session_destroy();
+		}
+		
+		if($_POST['action'] == 'checkout-card') {
+			if(empty($_POST['name'])) return gForm::init(['status' => 'error', 'msg' => 'Invalid data etered, please try again', 'has-error' => ['name']]);
+			if(empty($_POST['card'])) return gForm::init(['status' => 'error', 'msg' => 'Invalid data etered, please try again', 'has-error' => ['card']]);
+			if(empty($_POST['expiry'])) return gForm::init(['status' => 'error', 'msg' => 'Invalid data etered, please try again', 'has-error' => ['expiry']]);
+			if(empty($_POST['cvv'])) return gForm::init(['status' => 'error', 'msg' => 'Invalid data etered, please try again', 'has-error' => ['cvv']]);
+
+
+			return gForm::init(['status' => 'well', 'msg' => 'Your payment was completed successfully']);
 		}
 
 	}
