@@ -53,3 +53,4 @@ dist-product/
 **/img
 
 db.php
+config.php
