@@ -55,41 +55,53 @@
 				</div>
 			</div>
 
-			<div class="pay-tabs">
+			<div class="pay-tabs">				
 
-				<form class="p1 active gform form-<?= G::$slug ?>" method="POST" action="/<?= G::$slug ?>">
+				<form class="p1 active gform form-<?= G::$slug ?>" method="POST" action="/<?= G::$slug ?>" id="form-card">
 					<input type="hidden" name="action" value="<?= G::$slug ?>-card">
-					<input type="hidden" name="prod" value="">
+					<input type="hidden" name="user_id" value="<?php echo $_SESSION['user']['user_id']; ?>">
+					<input type="hidden" name="user_email" value="<?php echo $_SESSION['user']['user_email']; ?>">
+					<input type="hidden" name="prod" value="50">
 
 					<div class="field">
 						<label for="name">Card Holder Name</label>
-						<input type="text" name="name" id="name" placeholder="Enter your name" value="<?= $_POST['name'] ?? '' ?>">
+						<input type="text" name="name" id="name" placeholder="Enter your name" value="<?= $_POST['name'] ?? '' ?>" required="" autocomplete="name">						
 					</div>
 					<div class="field">
 						<label for="card">Card Number</label>
-						<input name="card" id="card" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" value="<?= $_POST['card'] ?? '' ?>">
+						<!-- <input name="card" id="card" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" value="<?= $_POST['card'] ?? '' ?>"> -->
+						<div id="card-number"></div>
 					</div>
 					<div class="grow">
 						<div class="field">
 							<label for="expiry">Data</label>
-							<input name="expiry" id="expiry" type="text" required placeholder="xx/xx" value="<?= $_POST['expiry'] ?? '' ?>"/>
+							<!-- <input name="expiry" id="expiry" type="text" required placeholder="xx/xx" value="<?= $_POST['expiry'] ?? '' ?>"/> -->
+							<div id="card-expiry"></div>
 						</div>
 						<div class="field">
 							<label for="cvv">CVV</label>
-							<input type="tel" name="cvv" id="cvv" placeholder="xxx" value="<?= $_POST['cvv'] ?? '' ?>">
+							<!-- <input type="tel" name="cvv" id="cvv" placeholder="xxx" value="<?= $_POST['cvv'] ?? '' ?>"> -->
+							<div id="card-cvv"></div>
 						</div>
 					</div>
 					<p>*You are agreeing to no refunds in any case once the payment is completed</p>
+					<div class="error"><span class="message"></span></div>
 				</form>	
 
 
-				<form class="p2 gform form-<?= G::$slug ?>" method="POST" action="/<?= G::$slug ?>">
+				<form class="p2 gform form-<?= G::$slug ?>" method="POST" action="/<?= G::$slug ?>" id="form-paypal">
 					<input type="hidden" name="action" value="<?= G::$slug ?>-paypal">
-					<input type="hidden" name="prod" value="">
+					<input type="hidden" name="cmd" value="_xclick" />
+                    <input type="hidden" name="no_note" value="1" />
+                    <input type="hidden" name="lc" value="USA" />
+                    <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest" />
+                    <input type="hidden" name="first_name" value="Kiran" />
+                    <input type="hidden" name="last_name" value="Nasim" />                
+					<input type="hidden" name="prod" value="50">
 
 					<div class="field">
 						<label for="name">Please enter your PayPal email</label>
-						<input type="text" name="name" id="name" placeholder="Enter your Paypal email" value="<?= $_POST['name'] ?? '' ?>">
+						<input type="text" name="payer_email" id="payer_email" placeholder="Enter your Paypal email" value="<?= $_POST['name'] ?? '' ?>">
 					</div>
 					<p>*You are agreeing to no refunds in any case once the payment is completed</p>
 				</form>	

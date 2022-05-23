@@ -2,6 +2,17 @@
 	if(!empty(gForm::$msg)) {
 		echo '<div class="notice status-'.gForm::$status.'">'.gForm::$msg.'</div>';
 	}
+	
+	require_once __DIR__ . '/../../db.php';
+
+	$db = new Database();
+	$query = "SELECT * FROM tbl_users WHERE user_id = ?";
+	$paramType = "s";
+	$paramValue = array(
+		self::$user['user_id']
+	);
+	$user = $db->select($query, $paramType, $paramValue);
+	self::$user = $user[0];	
 ?>
 
 <main class="content fullh">	
@@ -66,7 +77,7 @@
 			include_once 'db.php';	
 
 			$db = new Database();
-			$conn = $db->connect();
+			$conn = $db->getConnect();
 
 			$sql = "SELECT * FROM tbl_track WHERE user_id = '" . self::$user['user_id'] . "'";
 

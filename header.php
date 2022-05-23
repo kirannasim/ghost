@@ -25,7 +25,7 @@
 	<meta name="twitter:site" content="@<?= G::$website['site_name'] ?>">
 
 
-	<?php if(G::$canonical) echo '<link rel="canonical" href="https://example.com/'.G::$canonical.'" />'; ?>
+	<?php if(G::$canonical) echo '<link rel="canonical" href="https://example.com/'.G::$canonical.'" />'; ?>	
 
 	<script type="application/ld+json">
 	{
@@ -53,12 +53,15 @@
 	<link rel="preload" href="/assets/fonts/DMSans-Medium.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="/assets/fonts/DMSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="/assets/fonts/OpenSans-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+
+	<script src="https://js.stripe.com/v3/"></script>
 	
 	<script defer
 		src="https://code.jquery.com/jquery-3.6.0.min.js"
 		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 		crossorigin="anonymous"></script>
-		<script defer src="/assets/main.js"></script>
+	<script defer src="/assets/main.js"></script>	
+	<script defer src="/payments/stripe/stripe-elements.js"></script>
 	
 </head>
 <body class="<?= implode(' ', G::$body_class) ?>">

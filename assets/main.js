@@ -1,4 +1,7 @@
+var stripeKey = "pk_test_51JRk8NDVZh2Lq3ZogcoKAvg8G9jLOqUPY1xKWxq9wX1arpW102ru0ezBvA52CkFjBpxK4pZGEn8wbjP3QGIzk1Ue000Lidpbvr";
+
 $(function() {
+      
 	function resize_block($el, $gap) {
 		$($el).css("max-height","calc(100vh - "+($($el).offset().top+$gap)+"px)");
 	}
@@ -45,10 +48,14 @@ $(function() {
 	$('.notice .close').click(function() {
 		$(this).closest('.notice').addClass('animate__animated animate__bounceOutRight');
 	});
-	$('.page-checkout .buy').click(function() {
-		$('form.active').submit();
-	});
-	$(document).on('click', 'form',function(){
+	$('.page-checkout .buy').click(function(e) {
+		if ($('#form-paypal').hasClass('active')) {
+			$('#form-paypal').attr('action', '/payments/paypal/create-order.php');
+			$('#form-paypal').submit();
+		}
+			
+	});	
+	$(document).on('click', 'form',function() {
 		$('.invalid').removeClass('invalid');
 	});
 })

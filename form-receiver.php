@@ -32,7 +32,7 @@
 	function clean_inp($input) {
 		return htmlspecialchars(stripslashes(trim($input)));
 	}
-	
+
 	function validate_email($email) {
 		if(!preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/", $email)){
 			return gForm::init(['status' => 'error', 'msg' => 'Invalid email, please try again', 'has-error' => 'email']);
@@ -122,7 +122,8 @@
 					}
 				}
 				
-				$_SESSION["user"] = $user;
+				$_SESSION['user']['user_id'] = $user['user_id'];
+				$_SESSION['user']['user_email'] = $user['user_email'];
 				header('Location: /account');
 				return;
 			} else {
@@ -247,22 +248,10 @@
 	if (G::$template == 'logout') {
 		session_destroy();
 		header('Location: /login');
-	}
-
-	//tempo solution
-	function test_start_session() {
-		session_start();
-		$_SESSION["user"] = [
-			'credit' => 100,
-			'username' => 'Eugene',
-			'threads_limit' => 100,
-			'api_key' => 'KNZXC9890ASD890-ZX-9CAS',
-		];
-		header('Location: /account');
-	}
+	}	
 
 	$db = new Database();
-	$conn = $db->connect();
+	$conn = $db->getConnect();
 	
 	if ( isset( $_POST['action'] ) ) {
 		$action = $_POST['action'];
@@ -294,7 +283,7 @@
 		if ( 'email-verification' === $action ) {
 
 		} 
-		
+
 		if ( 'logout' === $action ) {
 			session_destroy();
 		}
