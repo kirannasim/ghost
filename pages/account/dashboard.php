@@ -74,18 +74,14 @@
 
 	<div class="g-list rest_page_hegiht a-right even">
 		<?php 
-			include_once 'db.php';	
-
-			$db = new Database();
-			$conn = $db->getConnect();
-
-			$sql = "SELECT * FROM tbl_track WHERE user_id = '" . self::$user['user_id'] . "'";
-
-			$result = mysqli_query( $conn, $sql );			
-
-			if ( $result ) {
-				$tracks = mysqli_fetch_all( $result, MYSQLI_BOTH );
-
+			$query = "SELECT * FROM tbl_track WHERE user_id = ?";
+			$paramType = "s";
+			$paramValue = array(
+				self::$user['user_id']
+			);
+			$tracks = $db->select($query, $paramType, $paramValue);
+			
+			if ( $tracks ) {
 				foreach ( $tracks as $track ) {					
 				?>
 				<div class="g-item">

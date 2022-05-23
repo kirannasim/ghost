@@ -248,7 +248,19 @@
 	if (G::$template == 'logout') {
 		session_destroy();
 		header('Location: /login');
-	}	
+	}
+	
+	// tempo solution
+	function test_start_session() {
+		session_start();
+		$_SESSION["user"] = [
+			'credit' => 100,
+			'username' => 'Eugene',
+			'threads_limit' => 100,
+			'api_key' => 'KNZXC9890ASD890-ZX-9CAS',
+		];
+		header('Location: /account');
+	}
 
 	$db = new Database();
 	$conn = $db->getConnect();
@@ -258,8 +270,8 @@
 	
 		if ( 'login' === $action ) {			
 			if ( isset( $_POST['email'] ) && isset( $_POST['password'] ) ) {
-				test_start_session();
-				// login( $conn, $_POST['email'], $_POST['password'], 1 );
+				// test_start_session();
+				login( $conn, $_POST['email'], $_POST['password'], 1 );
 			}
 		} 
 		
